@@ -1,0 +1,30 @@
+jepa:
+  z_dim: 384
+  act_dim: 5
+  hidden: 512
+  lr: 0.001
+  batch_size: 64
+  epochs: 60
+  loss_target: 0.15 # retrain if above this
+scene_mlp:
+  z_dim: 384
+  n_actions: 3
+  hidden_1: 256
+  hidden_2: 64
+  lr: 0.001
+  batch_size: 32
+  epochs: 60
+  dropout: 0.3
+  accuracy_target: 0.75
+  navigation:
+  surprise_threshold: 0.25 # YOLOE triggers above this
+  n_steps: 300
+  stuck_window: 10
+  stuck_variance: 0.1
+data:
+  mock_path: "data/trajectories/mock_50.json"
+  full_path: "data/trajectories/all_trajectories.json"
+  labels_path: "data/scene_labels/labels.json"
+models:
+  jepa_path: "models/jepa_predictor.pt"
+  scene_mlp_path: "models/scene_mlp.pt"
