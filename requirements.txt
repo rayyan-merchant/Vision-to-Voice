@@ -1,0 +1,32 @@
+# Vision-to-Voice — Track C (Riya Bhart) Requirements
+# Python 3.9 required
+
+# Core deep learning
+torch==2.1.2
+torchvision==0.16.2
+
+# Numpy — captum requires < 2.0
+numpy>=1.23,<2.0
+
+# Interpretability
+captum==0.8.0
+scikit-learn>=1.3.0
+
+# Detection & OCR
+ultralytics>=8.3.0        # includes YOLOE
+easyocr>=1.7.0
+
+# AttnLRP (LRP eXplains Transformers)
+lxt>=0.2.0
+
+# Visualization & image processing
+opencv-python>=4.8.0
+matplotlib>=3.7.0
+Pillow>=10.0.0
+
+# Text-to-speech
+pyttsx3>=2.90
+
+# Utilities
+tqdm>=4.65.0
+timm>=0.9.0               # needed by DINOv3 hub load
