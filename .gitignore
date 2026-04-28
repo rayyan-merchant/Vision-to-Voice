@@ -8,6 +8,11 @@ models/*.png
 data/trajectories/*.json
 data/scene_labels/*.json
 data/campus_photos/
+data/bathroom
+data/bedroom(corrisor)
+data/cafeteria(kitchen)
+data/library(livingroom)
+data/raw
 __pycache__/
 *.pyc
 *.egg-info/
