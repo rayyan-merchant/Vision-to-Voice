@@ -45,8 +45,8 @@ mapper:
   surprise_threshold: 0.25             # JEPA error above this triggers YOLOE
 
 jepa:
-  hidden_dim:  512
-  epochs:      60
+  hidden_dim:  1024
+  epochs:      100
   lr:          1e-3
   batch_size:  64
   loss_target: 0.15                    # training succeeds when loss < this
@@ -58,7 +58,7 @@ scene_mlp:
   dropout:     0.3
   epochs:      60
   lr:          1e-3
-  batch_size:  32
+  batch_size cde:  32
   accuracy_target: 0.75
   model_path:  "models/scene_mlp.pt"
   label_path:  "data/scene_labels/labels.json"
