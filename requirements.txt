@@ -1,0 +1,33 @@
+# Vision-to-Voice — Requirements
+# Python 3.9 recommended
+
+# Core
+torch
+torchvision
+numpy>=1.23,<2.0
+
+# Perception & Models
+timm
+
+# Simulation
+ai2thor==5.0.0
+
+# Detection & OCR
+ultralytics>=8.3.0
+easyocr
+
+# Interpretability
+captum
+lxt
+
+# Data & Visualization
+scikit-learn
+matplotlib
+opencv-python
+Pillow
+networkx
+tqdm
+pandas
+
+# Narrator
+pyttsx3
