@@ -42,41 +42,12 @@ def run_test(scene, n_steps, config):
     print(f"Running test on {scene} for {n_steps} steps")
     print(f"{'='*50}")
 
-    try:
-        controller = Controller(
-            scene=scene,
-            width=config["ai2thor"]["width"],
-            height=config["ai2thor"]["height"],
-            fieldOfView=config["ai2thor"]["fov"],
-        )
-    except Exception as e:
-        print(f"Failed to initialize real AI2-THOR controller: {e}. Using MockController.")
-        import random
-        class MockEvent:
-            def __init__(self):
-                self.frame = np.random.randint(0, 255, (224, 224, 3), dtype=np.uint8)
-                self.metadata = {
-                    "agent": {
-                        "position": {"x": random.uniform(-5, 5), "y": 0.0, "z": random.uniform(-5, 5)},
-                        "rotation": {"x": 0.0, "y": random.uniform(0, 360), "z": 0.0}
-                    }
-                }
-        class MockController:
-            def __init__(self, scene, **kwargs):
-                self.scene = scene
-                self.last_event = MockEvent()
-            def step(self, action):
-                if action == "MoveAhead":
-                    self.last_event.metadata["agent"]["position"]["x"] += random.uniform(0.1, 0.5)
-                elif action == "RotateRight":
-                    self.last_event.metadata["agent"]["rotation"]["y"] += 90
-                elif action == "RotateLeft":
-                    self.last_event.metadata["agent"]["rotation"]["y"] -= 90
-                self.last_event.frame = np.random.randint(0, 255, (224, 224, 3), dtype=np.uint8)
-                return self.last_event
-            def stop(self):
-                pass
-        controller = MockController(scene=scene)
+    controller = Controller(
+        scene=scene,
+        width=config["ai2thor"]["width"],
+        height=config["ai2thor"]["height"],
+        fieldOfView=config["ai2thor"]["fov"],
+    )
 
     encoder = DINOEncoder()
     predictor = load_jepa(config["jepa"]["model_path"], hidden=config["jepa"]["hidden_dim"])

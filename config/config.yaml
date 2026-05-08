@@ -40,7 +40,7 @@ trajectory:
   scene_switch_every: 500              # rotate scene every N samples
 
 mapper:
-  dedup_threshold:   0.5               # metres — nodes closer than this are merged
+  dedup_threshold:   0.15              # metres — nodes closer than this are merged
   frontier_max_deg:  3                 # nodes with degree < this are frontiers
   surprise_threshold: 0.25             # JEPA error above this triggers YOLOE
 
@@ -58,7 +58,7 @@ scene_mlp:
   dropout:     0.3
   epochs:      60
   lr:          1e-3
-  batch_size cde:  32
+  batch_size:  32
   accuracy_target: 0.75
   model_path:  "models/scene_mlp.pt"
   label_path:  "data/scene_labels/labels.json"

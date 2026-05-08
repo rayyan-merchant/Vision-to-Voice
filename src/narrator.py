@@ -62,6 +62,7 @@ class Narrator:
         self._engine = None
         self._worker_thread: Optional[threading.Thread] = None
         self._stop_event = threading.Event()
+        self._use_mac_say = False
 
         if enabled:
             self._init_engine()
@@ -82,10 +83,18 @@ class Narrator:
             print("[narrator] Using Windows SAPI (win32com). All phrases will speak correctly.")
             return
         except ImportError:
-            print("[narrator] pywin32 not found. Install: pip install pywin32")
-            print("[narrator] Trying pyttsx3 fallback...")
-        except Exception as e:
-            print(f"[narrator] win32com failed ({e}). Trying pyttsx3...")
+            pass # Try Mac or pyttsx3 fallback
+            
+        # MAC OS: Use native 'say' command
+        import sys
+        if sys.platform == "darwin":
+            self._use_mac_say = True
+            print("[narrator] Using macOS 'say' command.")
+            return
+
+        print("[narrator] pywin32 not found. Install: pip install pywin32")
+        print("[narrator] Trying pyttsx3 fallback...")
+
 
         # FALLBACK: pyttsx3
         try:
@@ -103,7 +112,7 @@ class Narrator:
 
     def _start_worker(self):
         """Start the background speech worker thread."""
-        if self._engine is None:
+        if self._engine is None and not self._use_mac_say:
             return
         self._worker_thread = threading.Thread(
             target=self._speech_worker,
@@ -123,7 +132,10 @@ class Narrator:
             text: The text to speak aloud.
             priority: If True, drops the oldest queued message to make room.
         """
-        if not self.enabled or self._engine is None:
+        if not self.enabled:
+            return
+            
+        if self._engine is None and not self._use_mac_say:
             print(f"[narrator] (silent) {text}")
             return
 
@@ -245,10 +257,15 @@ class Narrator:
             except Exception as e:
                 print(f"[narrator] Worker thread could not init TTS: {e}")
 
+        import subprocess
+        import sys
+
         while not self._stop_event.is_set():
             try:
                 text = self._queue.get(timeout=0.5)
-                if thread_engine is not None:
+                if self._use_mac_say:
+                    subprocess.run(["say", text])
+                elif thread_engine is not None:
                     try:
                         if use_sapi:
                             thread_engine.Speak(text)
@@ -332,6 +349,10 @@ def make_narrator(enabled: bool = True, **kwargs) -> "Narrator | SilentNarrator"
     """
     if not enabled:
         return SilentNarrator()
+    import sys
+    if sys.platform == "darwin":
+        return Narrator(enabled=True, **kwargs)
+        
     try:
         import win32com.client  # noqa: F401 — just checking availability
         return Narrator(enabled=True, **kwargs)

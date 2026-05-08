@@ -128,7 +128,9 @@ class DINOEncoder:
         with torch.no_grad():
             features = self.model.forward_features(tensors)
 
-        return features["x_norm_clstoken"]   # (N, 384)
+        cls_batch = features["x_norm_clstoken"]   # (N, 384)
+        
+        return cls_batch
 
     # ── Internal ──────────────────────────────────────────────────────────────
     def _preprocess(self, pil_img: Image.Image) -> torch.Tensor:

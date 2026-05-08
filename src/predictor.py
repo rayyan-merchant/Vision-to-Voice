@@ -34,10 +34,23 @@ ACT_MAP = {
 
 
 def action_onehot(action_str):
-    """Convert action string to one-hot tensor (5-dim)."""
+    """
+    Convert action string to one-hot tensor (5-dim).
+    Handles different casing ("rotateleft" vs "RotateLeft") correctly.
+    """
     v = torch.zeros(5)
-    if action_str in ACT_MAP:
-        v[ACT_MAP[action_str]] = 1.0
+    if not action_str:
+        return v
+        
+    # Case-insensitive lookup
+    norm_map = {k.lower(): k for k in ACT_MAP.keys()}
+    key = action_str.lower().strip()
+    
+    if key in norm_map:
+        v[ACT_MAP[norm_map[key]]] = 1.0
+    else:
+        print(f"[JEPA] WARNING: Unknown action '{action_str}' — returning zero vector.")
+        
     return v
 
 
@@ -100,15 +113,17 @@ class JEPAPredictor(nn.Module):
     JEPA predicts in meaning space, not pixel space.
     """
 
-    def __init__(self, z_dim=384, act_dim=5, hidden=512):
+    def __init__(self, z_dim=384, act_dim=5, hidden=1024):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(z_dim + act_dim, hidden),
             nn.LayerNorm(hidden),
             nn.GELU(),
             nn.Linear(hidden, hidden),
+            nn.LayerNorm(hidden), # v9: internal stability
             nn.GELU(),
             nn.Linear(hidden, z_dim),
+            nn.LayerNorm(z_dim)   # v9: Force output to match normalized DINO scale
         )
 
     def forward(self, z, a):
@@ -120,7 +135,7 @@ class JEPAPredictor(nn.Module):
 # ■■ Training Function ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 def train_jepa(data_path,
                model_out="models/jepa_predictor.pt",
-               z_dim=384, act_dim=5, hidden=512,
+               z_dim=384, act_dim=5, hidden=1024,
                lr=1e-3, batch_size=64, epochs=60):
     """
     Train the JEPA predictor on trajectory data.
@@ -214,7 +229,7 @@ def train_jepa(data_path,
 
 # ■■ Inference / Surprise ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 def load_jepa(model_path="models/jepa_predictor.pt",
-              z_dim=384, act_dim=5, hidden=512):
+              z_dim=384, act_dim=5, hidden=1024):
     """Load a trained JEPA model for inference."""
     model = JEPAPredictor(z_dim=z_dim, act_dim=act_dim, hidden=hidden)
     model.load_state_dict(

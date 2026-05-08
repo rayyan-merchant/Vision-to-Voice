@@ -31,3 +31,12 @@ yoloe-11s-seg.pt
 notebooks/yoloe-11s-deg.pt
 notebooks/mobileclip_blt.ts
 
+venv/
+.venv/
+env/
+.env/
+bin/
+lib/
+include/
+share/
+pyvenv.cfg

@@ -246,7 +246,7 @@ def run_random_walk(n_steps: int, scene: str, show_display: bool):
         recent_positions.append(pos2)
         if is_stuck(recent_positions):
             # Full 180° turn + 3 forced MoveAheads to break out of corners
-            for _ in range(4):    # 4 × 90° RotateRight = 360° sweep
+            for _ in range(2):    # 2 × 90° RotateRight = 180° turn
                 ctrl.step("RotateRight")
             for _ in range(3):    # walk forward 3 steps
                 ctrl.step("MoveAhead")
