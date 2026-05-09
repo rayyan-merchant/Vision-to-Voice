@@ -3,6 +3,13 @@
 
 ---
 
+### Project Demo 
+https://drive.google.com/file/d/1cW3rZMu2IV5sggFjb7kgtAt0j03ZKNJk/view?usp=sharing
+--- 
+### Project Report
+https://drive.google.com/file/d/1X2Hk0NZnk3k4Ia_EqpMeWBymXmFf1l5q/view?usp=sharing
+
+
 ## What This Is
 
 Vision-to-Voice is a memory-driven visual navigation assistant for visually impaired students on university campuses. It runs on a camera feed, builds a topological map of the environment from scratch, predicts what comes next before it is fully visible, detects unexpected changes, enforces socially appropriate navigation behaviour, and narrates everything to the user in plain language — without any pre-loaded map, without GPS, and without a human guide.
