@@ -1,0 +1,779 @@
+2026-05-09 20:05:25,532 [INFO] [init] Scene=FloorPlan210  Steps=200  Log=data/logs/navigator_FloorPlan210.log
+2026-05-09 20:05:25,697 [DEBUG] /Users/syedarijaali/.ai2thor/releases/thor-OSXIntel64-f0825767cd50d69f666c7f282e54abfe58f1e917/thor-OSXIntel64-f0825767cd50d69f666c7f282e54abfe58f1e917.app/Contents/MacOS/AI2-THOR exists - skipping download
+2026-05-09 20:05:28,945 [INFO] Initialize return: {'cameraNearPlane': 0.009999999776482582, 'cameraFarPlane': 20.0}
+2026-05-09 20:05:29,193 [INFO] using MLP layer as FFN
+2026-05-09 20:05:33,781 [INFO] [calibrate] Starting 50 warmup steps ...
+2026-05-09 20:05:33,996 [DEBUG] [calibrate] warmup step=1 surprise=4.0976
+2026-05-09 20:05:34,083 [DEBUG] [calibrate] warmup step=2 surprise=2.1993
+2026-05-09 20:05:34,168 [DEBUG] [calibrate] warmup step=3 surprise=6.5615
+2026-05-09 20:05:34,242 [DEBUG] [calibrate] warmup step=4 surprise=3.7404
+2026-05-09 20:05:34,329 [DEBUG] [calibrate] warmup step=5 surprise=4.2455
+2026-05-09 20:05:34,411 [DEBUG] [calibrate] warmup step=6 surprise=3.8048
+2026-05-09 20:05:34,492 [DEBUG] [calibrate] warmup step=7 surprise=1.6964
+2026-05-09 20:05:34,574 [DEBUG] [calibrate] warmup step=8 surprise=1.7850
+2026-05-09 20:05:34,652 [DEBUG] [calibrate] warmup step=9 surprise=1.9822
+2026-05-09 20:05:34,732 [DEBUG] [calibrate] warmup step=10 surprise=1.5861
+2026-05-09 20:05:34,810 [DEBUG] [calibrate] warmup step=11 surprise=3.9897
+2026-05-09 20:05:34,893 [DEBUG] [calibrate] warmup step=12 surprise=1.8877
+2026-05-09 20:05:34,977 [DEBUG] [calibrate] warmup step=13 surprise=3.6998
+2026-05-09 20:05:35,061 [DEBUG] [calibrate] warmup step=14 surprise=3.2705
+2026-05-09 20:05:35,135 [DEBUG] [calibrate] warmup step=15 surprise=1.8877
+2026-05-09 20:05:35,217 [DEBUG] [calibrate] warmup step=16 surprise=2.4988
+2026-05-09 20:05:35,306 [DEBUG] [calibrate] warmup step=17 surprise=3.7329
+2026-05-09 20:05:35,387 [DEBUG] [calibrate] warmup step=18 surprise=4.9662
+2026-05-09 20:05:35,466 [DEBUG] [calibrate] warmup step=19 surprise=3.3234
+2026-05-09 20:05:35,543 [DEBUG] [calibrate] warmup step=20 surprise=4.6587
+2026-05-09 20:05:35,619 [DEBUG] [calibrate] warmup step=21 surprise=2.0889
+2026-05-09 20:05:35,703 [DEBUG] [calibrate] warmup step=22 surprise=2.0889
+2026-05-09 20:05:35,786 [DEBUG] [calibrate] warmup step=23 surprise=5.7989
+2026-05-09 20:05:35,865 [DEBUG] [calibrate] warmup step=24 surprise=3.9848
+2026-05-09 20:05:35,947 [DEBUG] [calibrate] warmup step=25 surprise=5.5828
+2026-05-09 20:05:36,022 [DEBUG] [calibrate] warmup step=26 surprise=3.4756
+2026-05-09 20:05:36,109 [DEBUG] [calibrate] warmup step=27 surprise=6.9736
+2026-05-09 20:05:36,188 [DEBUG] [calibrate] warmup step=28 surprise=4.9662
+2026-05-09 20:05:36,273 [DEBUG] [calibrate] warmup step=29 surprise=3.9089
+2026-05-09 20:05:36,353 [DEBUG] [calibrate] warmup step=30 surprise=6.1416
+2026-05-09 20:05:36,440 [DEBUG] [calibrate] warmup step=31 surprise=3.7236
+2026-05-09 20:05:36,521 [DEBUG] [calibrate] warmup step=32 surprise=8.2286
+2026-05-09 20:05:36,605 [DEBUG] [calibrate] warmup step=33 surprise=5.7023
+2026-05-09 20:05:36,695 [DEBUG] [calibrate] warmup step=34 surprise=6.2656
+2026-05-09 20:05:36,773 [DEBUG] [calibrate] warmup step=35 surprise=5.7023
+2026-05-09 20:05:36,856 [DEBUG] [calibrate] warmup step=36 surprise=6.7051
+2026-05-09 20:05:36,942 [DEBUG] [calibrate] warmup step=37 surprise=5.4246
+2026-05-09 20:05:37,021 [DEBUG] [calibrate] warmup step=38 surprise=2.8436
+2026-05-09 20:05:37,104 [DEBUG] [calibrate] warmup step=39 surprise=2.7928
+2026-05-09 20:05:37,183 [DEBUG] [calibrate] warmup step=40 surprise=4.3812
+2026-05-09 20:05:37,257 [DEBUG] [calibrate] warmup step=41 surprise=2.4292
+2026-05-09 20:05:37,338 [DEBUG] [calibrate] warmup step=42 surprise=2.4378
+2026-05-09 20:05:37,418 [DEBUG] [calibrate] warmup step=43 surprise=3.6066
+2026-05-09 20:05:37,507 [DEBUG] [calibrate] warmup step=44 surprise=6.9305
+2026-05-09 20:05:37,588 [DEBUG] [calibrate] warmup step=45 surprise=4.2654
+2026-05-09 20:05:37,666 [DEBUG] [calibrate] warmup step=46 surprise=1.3111
+2026-05-09 20:05:37,742 [DEBUG] [calibrate] warmup step=47 surprise=1.3111
+2026-05-09 20:05:37,820 [DEBUG] [calibrate] warmup step=48 surprise=1.5067
+2026-05-09 20:05:37,902 [DEBUG] [calibrate] warmup step=49 surprise=2.0348
+2026-05-09 20:05:37,911 [INFO] [calibrate] mean=3.841  std=1.748  threshold=5.589
+2026-05-09 20:05:37,993 [INFO] [calibrate] Controller reset to spawn.
+2026-05-09 20:05:37,993 [INFO] ============================================================
+2026-05-09 20:05:37,993 [INFO]   Vision-to-Voice | 200 steps | threshold=5.589
+2026-05-09 20:05:37,993 [INFO] ============================================================
+2026-05-09 20:05:38,093 [INFO] [yoloe-check] step=0 surprise=0.0000 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:38,094 [DEBUG] [frontier] step=0 situation=A (at frontier) target=None
+2026-05-09 20:05:38,094 [DEBUG] [paper3] step=0 action=move_fast passed filter
+2026-05-09 20:05:38,094 [INFO] [step] step=0 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:38,188 [INFO] [yoloe-check] step=1 surprise=2.4567 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:38,189 [DEBUG] [frontier] step=1 situation=A (at frontier) target=None
+2026-05-09 20:05:38,189 [DEBUG] [paper3] step=1 action=move_fast passed filter
+2026-05-09 20:05:38,281 [INFO] [yoloe-check] step=2 surprise=2.1830 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:38,281 [DEBUG] [frontier] step=2 situation=A (at frontier) target=None
+2026-05-09 20:05:38,282 [DEBUG] [paper3] step=2 action=move_fast passed filter
+2026-05-09 20:05:38,383 [INFO] [yoloe-check] step=3 surprise=2.4336 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:38,383 [DEBUG] [frontier] step=3 situation=A (at frontier) target=None
+2026-05-09 20:05:38,383 [DEBUG] [paper3] step=3 action=navigate passed filter
+2026-05-09 20:05:38,464 [INFO] [yoloe-check] step=4 surprise=5.3353 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:38,464 [DEBUG] [frontier] step=4 situation=A (at frontier) target=None
+2026-05-09 20:05:38,464 [DEBUG] [paper3] step=4 action=navigate passed filter
+2026-05-09 20:05:38,548 [INFO] [yoloe-check] step=5 surprise=6.4298 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:38,548 [INFO] [yoloe-trigger] step=5 surprise=6.4298 — running detector
+2026-05-09 20:05:39,115 [DEBUG] [frontier] step=5 situation=A (at frontier) target=None
+2026-05-09 20:05:39,116 [DEBUG] [paper3] step=5 action=navigate passed filter
+2026-05-09 20:05:39,116 [INFO] [step] step=5 target=None raw=RotateLeft final=RotateLeft last_success=True
+2026-05-09 20:05:39,180 [INFO] [yoloe-check] step=6 surprise=5.6565 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:39,180 [INFO] [yoloe-trigger] step=6 surprise=5.6565 — running detector
+2026-05-09 20:05:39,380 [DEBUG] [frontier] step=6 situation=A (at frontier) target=None
+2026-05-09 20:05:39,381 [DEBUG] [paper3] step=6 action=move_fast passed filter
+2026-05-09 20:05:39,440 [INFO] [yoloe-check] step=7 surprise=2.4437 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:39,440 [DEBUG] [frontier] step=7 situation=A (at frontier) target=None
+2026-05-09 20:05:39,440 [DEBUG] [paper3] step=7 action=navigate passed filter
+2026-05-09 20:05:39,495 [INFO] [yoloe-check] step=8 surprise=5.8445 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:39,495 [INFO] [yoloe-trigger] step=8 surprise=5.8445 — running detector
+2026-05-09 20:05:39,659 [DEBUG] [frontier] step=8 situation=A (at frontier) target=None
+2026-05-09 20:05:39,659 [DEBUG] [paper3] step=8 action=move_fast passed filter
+2026-05-09 20:05:39,719 [INFO] [yoloe-check] step=9 surprise=2.8360 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:39,720 [DEBUG] [frontier] step=9 situation=A (at frontier) target=None
+2026-05-09 20:05:39,720 [DEBUG] [paper3] step=9 action=move_fast passed filter
+2026-05-09 20:05:39,776 [INFO] [yoloe-check] step=10 surprise=2.8431 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:39,777 [DEBUG] [frontier] step=10 situation=A (at frontier) target=None
+2026-05-09 20:05:39,777 [DEBUG] [paper3] step=10 action=move_fast passed filter
+2026-05-09 20:05:39,777 [INFO] [step] step=10 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:39,832 [INFO] [yoloe-check] step=11 surprise=3.2931 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:39,832 [DEBUG] [frontier] step=11 situation=A (at frontier) target=None
+2026-05-09 20:05:39,832 [DEBUG] [paper3] step=11 action=navigate passed filter
+2026-05-09 20:05:39,892 [INFO] [yoloe-check] step=12 surprise=5.3444 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:39,892 [DEBUG] [frontier] step=12 situation=A (at frontier) target=None
+2026-05-09 20:05:39,892 [DEBUG] [paper3] step=12 action=move_fast passed filter
+2026-05-09 20:05:39,949 [INFO] [yoloe-check] step=13 surprise=4.3200 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:39,950 [DEBUG] [frontier] step=13 situation=A (at frontier) target=None
+2026-05-09 20:05:39,950 [DEBUG] [paper3] step=13 action=navigate passed filter
+2026-05-09 20:05:40,005 [INFO] [yoloe-check] step=14 surprise=6.8530 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:40,006 [INFO] [yoloe-trigger] step=14 surprise=6.8530 — running detector
+2026-05-09 20:05:40,187 [DEBUG] [frontier] step=14 situation=A (at frontier) target=None
+2026-05-09 20:05:40,187 [DEBUG] [paper3] step=14 action=move_fast passed filter
+2026-05-09 20:05:40,242 [INFO] [yoloe-check] step=15 surprise=2.5180 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,242 [DEBUG] [frontier] step=15 situation=A (at frontier) target=None
+2026-05-09 20:05:40,242 [DEBUG] [paper3] step=15 action=move_fast passed filter
+2026-05-09 20:05:40,242 [INFO] [step] step=15 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:40,298 [INFO] [yoloe-check] step=16 surprise=2.2049 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,299 [DEBUG] [frontier] step=16 situation=A (at frontier) target=None
+2026-05-09 20:05:40,299 [DEBUG] [paper3] step=16 action=navigate passed filter
+2026-05-09 20:05:40,351 [INFO] [yoloe-check] step=17 surprise=5.4190 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,351 [DEBUG] [frontier] step=17 situation=A (at frontier) target=None
+2026-05-09 20:05:40,351 [DEBUG] [paper3] step=17 action=move_fast passed filter
+2026-05-09 20:05:40,406 [INFO] [yoloe-check] step=18 surprise=2.4187 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,406 [DEBUG] [frontier] step=18 situation=B target=4 n_frontiers=6
+2026-05-09 20:05:40,407 [DEBUG] [paper3] step=18 action=navigate passed filter
+2026-05-09 20:05:40,460 [INFO] [yoloe-check] step=19 surprise=4.5226 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,461 [DEBUG] [frontier] step=19 situation=B target=4 n_frontiers=6
+2026-05-09 20:05:40,461 [DEBUG] [paper3] step=19 action=move_fast passed filter
+2026-05-09 20:05:40,512 [INFO] [yoloe-check] step=20 surprise=2.6771 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,512 [DEBUG] [norm-check] step=20 pred_norm=47.136 act_norm=46.168
+2026-05-09 20:05:40,512 [DEBUG] [frontier] step=20 situation=A (at frontier) target=None
+2026-05-09 20:05:40,512 [DEBUG] [paper3] step=20 action=move_fast passed filter
+2026-05-09 20:05:40,513 [INFO] [step] step=20 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:40,569 [INFO] [yoloe-check] step=21 surprise=2.9173 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,569 [DEBUG] [frontier] step=21 situation=A (at frontier) target=None
+2026-05-09 20:05:40,569 [DEBUG] [paper3] step=21 action=navigate passed filter
+2026-05-09 20:05:40,623 [INFO] [yoloe-check] step=22 surprise=6.3931 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:40,624 [INFO] [yoloe-trigger] step=22 surprise=6.3931 — running detector
+2026-05-09 20:05:40,785 [DEBUG] [frontier] step=22 situation=A (at frontier) target=None
+2026-05-09 20:05:40,785 [DEBUG] [paper3] step=22 action=navigate passed filter
+2026-05-09 20:05:40,841 [INFO] [yoloe-check] step=23 surprise=4.7384 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:40,842 [DEBUG] [frontier] step=23 situation=A (at frontier) target=None
+2026-05-09 20:05:40,842 [DEBUG] [paper3] step=23 action=navigate passed filter
+2026-05-09 20:05:40,898 [INFO] [yoloe-check] step=24 surprise=6.3931 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:40,898 [INFO] [yoloe-trigger] step=24 surprise=6.3931 — running detector
+2026-05-09 20:05:41,055 [DEBUG] [frontier] step=24 situation=A (at frontier) target=None
+2026-05-09 20:05:41,055 [DEBUG] [paper3] step=24 action=move_fast passed filter
+2026-05-09 20:05:41,115 [INFO] [yoloe-check] step=25 surprise=3.0389 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,115 [DEBUG] [frontier] step=25 situation=A (at frontier) target=None
+2026-05-09 20:05:41,115 [DEBUG] [paper3] step=25 action=move_fast passed filter
+2026-05-09 20:05:41,115 [INFO] [step] step=25 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:41,171 [INFO] [yoloe-check] step=26 surprise=3.5407 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,172 [DEBUG] [frontier] step=26 situation=A (at frontier) target=None
+2026-05-09 20:05:41,172 [DEBUG] [paper3] step=26 action=move_fast passed filter
+2026-05-09 20:05:41,227 [INFO] [yoloe-check] step=27 surprise=3.9284 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,227 [DEBUG] [frontier] step=27 situation=A (at frontier) target=None
+2026-05-09 20:05:41,227 [DEBUG] [paper3] step=27 action=move_fast passed filter
+2026-05-09 20:05:41,283 [INFO] [yoloe-check] step=28 surprise=5.0064 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,283 [DEBUG] [frontier] step=28 situation=A (at frontier) target=None
+2026-05-09 20:05:41,283 [DEBUG] [paper3] step=28 action=navigate passed filter
+2026-05-09 20:05:41,339 [INFO] [yoloe-check] step=29 surprise=6.0945 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:41,340 [INFO] [yoloe-trigger] step=29 surprise=6.0945 — running detector
+2026-05-09 20:05:41,505 [INFO] [yoloe-objects] step=29 detected=['door']
+2026-05-09 20:05:41,505 [DEBUG] [frontier] step=29 situation=A (at frontier) target=None
+2026-05-09 20:05:41,505 [DEBUG] [paper3] step=29 action=move_fast passed filter
+2026-05-09 20:05:41,564 [INFO] [yoloe-check] step=30 surprise=2.2917 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,564 [DEBUG] [frontier] step=30 situation=A (at frontier) target=None
+2026-05-09 20:05:41,564 [DEBUG] [paper3] step=30 action=move_fast passed filter
+2026-05-09 20:05:41,564 [INFO] [step] step=30 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:41,621 [INFO] [yoloe-check] step=31 surprise=2.7756 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,621 [DEBUG] [frontier] step=31 situation=A (at frontier) target=None
+2026-05-09 20:05:41,622 [DEBUG] [paper3] step=31 action=move_fast passed filter
+2026-05-09 20:05:41,678 [INFO] [yoloe-check] step=32 surprise=2.5447 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,679 [DEBUG] [frontier] step=32 situation=A (at frontier) target=None
+2026-05-09 20:05:41,679 [DEBUG] [paper3] step=32 action=move_fast passed filter
+2026-05-09 20:05:41,736 [INFO] [yoloe-check] step=33 surprise=2.7726 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,737 [DEBUG] [frontier] step=33 situation=A (at frontier) target=None
+2026-05-09 20:05:41,737 [DEBUG] [paper3] step=33 action=move_fast passed filter
+2026-05-09 20:05:41,794 [INFO] [yoloe-check] step=34 surprise=3.2410 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,794 [DEBUG] [frontier] step=34 situation=A (at frontier) target=None
+2026-05-09 20:05:41,794 [DEBUG] [paper3] step=34 action=move_fast passed filter
+2026-05-09 20:05:41,853 [INFO] [yoloe-check] step=35 surprise=3.6847 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,854 [DEBUG] [frontier] step=35 situation=A (at frontier) target=None
+2026-05-09 20:05:41,854 [DEBUG] [paper3] step=35 action=move_fast passed filter
+2026-05-09 20:05:41,854 [INFO] [step] step=35 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:41,915 [INFO] [yoloe-check] step=36 surprise=4.1174 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:41,916 [DEBUG] [frontier] step=36 situation=A (at frontier) target=None
+2026-05-09 20:05:41,916 [DEBUG] [paper3] step=36 action=navigate passed filter
+2026-05-09 20:05:41,974 [INFO] [yoloe-check] step=37 surprise=6.3372 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:41,974 [INFO] [yoloe-trigger] step=37 surprise=6.3372 — running detector
+2026-05-09 20:05:42,135 [DEBUG] [frontier] step=37 situation=A (at frontier) target=None
+2026-05-09 20:05:42,136 [DEBUG] [paper3] step=37 action=move_fast passed filter
+2026-05-09 20:05:42,195 [INFO] [yoloe-check] step=38 surprise=2.2006 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,196 [DEBUG] [frontier] step=38 situation=A (at frontier) target=None
+2026-05-09 20:05:42,196 [DEBUG] [paper3] step=38 action=navigate passed filter
+2026-05-09 20:05:42,255 [INFO] [yoloe-check] step=39 surprise=5.5768 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,255 [DEBUG] [frontier] step=39 situation=A (at frontier) target=None
+2026-05-09 20:05:42,256 [DEBUG] [paper3] step=39 action=navigate passed filter
+2026-05-09 20:05:42,311 [INFO] [yoloe-check] step=40 surprise=8.2723 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:42,312 [DEBUG] [norm-check] step=40 pred_norm=47.754 act_norm=42.475
+2026-05-09 20:05:42,312 [INFO] [yoloe-trigger] step=40 surprise=8.2723 — running detector
+2026-05-09 20:05:42,473 [DEBUG] [frontier] step=40 situation=A (at frontier) target=None
+2026-05-09 20:05:42,473 [DEBUG] [paper3] step=40 action=move_fast passed filter
+2026-05-09 20:05:42,473 [INFO] [step] step=40 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:42,532 [INFO] [yoloe-check] step=41 surprise=2.0634 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,533 [DEBUG] [frontier] step=41 situation=A (at frontier) target=None
+2026-05-09 20:05:42,533 [DEBUG] [paper3] step=41 action=navigate passed filter
+2026-05-09 20:05:42,591 [INFO] [yoloe-check] step=42 surprise=4.4609 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,592 [DEBUG] [frontier] step=42 situation=A (at frontier) target=None
+2026-05-09 20:05:42,592 [DEBUG] [paper3] step=42 action=move_fast passed filter
+2026-05-09 20:05:42,646 [INFO] [yoloe-check] step=43 surprise=4.1879 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,647 [DEBUG] [frontier] step=43 situation=A (at frontier) target=None
+2026-05-09 20:05:42,647 [DEBUG] [paper3] step=43 action=move_fast passed filter
+2026-05-09 20:05:42,702 [INFO] [yoloe-check] step=44 surprise=4.2677 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,703 [DEBUG] [frontier] step=44 situation=A (at frontier) target=None
+2026-05-09 20:05:42,703 [DEBUG] [paper3] step=44 action=move_fast passed filter
+2026-05-09 20:05:42,760 [INFO] [yoloe-check] step=45 surprise=5.1688 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,760 [DEBUG] [frontier] step=45 situation=A (at frontier) target=None
+2026-05-09 20:05:42,760 [DEBUG] [paper3] step=45 action=move_fast passed filter
+2026-05-09 20:05:42,760 [INFO] [step] step=45 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:42,819 [INFO] [yoloe-check] step=46 surprise=4.9677 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,819 [DEBUG] [frontier] step=46 situation=A (at frontier) target=None
+2026-05-09 20:05:42,820 [DEBUG] [paper3] step=46 action=move_fast passed filter
+2026-05-09 20:05:42,879 [INFO] [yoloe-check] step=47 surprise=4.3906 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:42,880 [DEBUG] [frontier] step=47 situation=A (at frontier) target=None
+2026-05-09 20:05:42,880 [DEBUG] [paper3] step=47 action=navigate passed filter
+2026-05-09 20:05:42,880 [INFO] [escape] step=47 action=RotateLeft state=try_left
+2026-05-09 20:05:42,942 [INFO] [yoloe-check] step=48 surprise=5.5520 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:42,942 [DEBUG] [frontier] step=48 situation=A (at frontier) target=None
+2026-05-09 20:05:42,943 [DEBUG] [paper3] step=48 action=move_fast passed filter
+2026-05-09 20:05:42,943 [INFO] [escape] step=48 action=MoveAhead state=try_left
+2026-05-09 20:05:43,004 [INFO] [yoloe-check] step=49 surprise=2.5078 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,005 [DEBUG] [frontier] step=49 situation=A (at frontier) target=None
+2026-05-09 20:05:43,005 [DEBUG] [paper3] step=49 action=move_fast passed filter
+2026-05-09 20:05:43,064 [INFO] [yoloe-check] step=50 surprise=2.1308 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,065 [DEBUG] [frontier] step=50 situation=A (at frontier) target=None
+2026-05-09 20:05:43,065 [DEBUG] [paper3] step=50 action=navigate passed filter
+2026-05-09 20:05:43,065 [INFO] [step] step=50 target=None raw=RotateLeft final=RotateLeft last_success=True
+2026-05-09 20:05:43,123 [INFO] [yoloe-check] step=51 surprise=5.0382 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,123 [DEBUG] [frontier] step=51 situation=A (at frontier) target=None
+2026-05-09 20:05:43,123 [DEBUG] [paper3] step=51 action=move_fast passed filter
+2026-05-09 20:05:43,185 [INFO] [yoloe-check] step=52 surprise=1.7794 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,185 [DEBUG] [frontier] step=52 situation=A (at frontier) target=None
+2026-05-09 20:05:43,185 [DEBUG] [paper3] step=52 action=navigate passed filter
+2026-05-09 20:05:43,240 [INFO] [yoloe-check] step=53 surprise=8.3938 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:43,241 [INFO] [yoloe-trigger] step=53 surprise=8.3938 — running detector
+2026-05-09 20:05:43,413 [DEBUG] [frontier] step=53 situation=A (at frontier) target=None
+2026-05-09 20:05:43,414 [DEBUG] [paper3] step=53 action=move_fast passed filter
+2026-05-09 20:05:43,470 [INFO] [yoloe-check] step=54 surprise=2.3771 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,470 [DEBUG] [frontier] step=54 situation=A (at frontier) target=None
+2026-05-09 20:05:43,470 [DEBUG] [paper3] step=54 action=move_fast passed filter
+2026-05-09 20:05:43,526 [INFO] [yoloe-check] step=55 surprise=2.4207 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,527 [DEBUG] [frontier] step=55 situation=B target=23 n_frontiers=25
+2026-05-09 20:05:43,527 [DEBUG] [paper3] step=55 action=navigate passed filter
+2026-05-09 20:05:43,527 [INFO] [step] step=55 target=23 raw=RotateRight final=RotateRight last_success=True
+2026-05-09 20:05:43,584 [INFO] [yoloe-check] step=56 surprise=4.2581 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,585 [DEBUG] [frontier] step=56 situation=B target=23 n_frontiers=26
+2026-05-09 20:05:43,585 [DEBUG] [paper3] step=56 action=move_fast passed filter
+2026-05-09 20:05:43,642 [INFO] [yoloe-check] step=57 surprise=2.3431 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:43,643 [DEBUG] [frontier] step=57 situation=A (at frontier) target=None
+2026-05-09 20:05:43,643 [DEBUG] [paper3] step=57 action=navigate passed filter
+2026-05-09 20:05:43,700 [INFO] [yoloe-check] step=58 surprise=5.6152 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:43,701 [INFO] [yoloe-trigger] step=58 surprise=5.6152 — running detector
+2026-05-09 20:05:43,916 [DEBUG] [frontier] step=58 situation=A (at frontier) target=None
+2026-05-09 20:05:43,917 [DEBUG] [paper3] step=58 action=navigate passed filter
+2026-05-09 20:05:43,987 [INFO] [yoloe-check] step=59 surprise=5.7221 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:43,988 [INFO] [yoloe-trigger] step=59 surprise=5.7221 — running detector
+2026-05-09 20:05:44,167 [DEBUG] [frontier] step=59 situation=A (at frontier) target=None
+2026-05-09 20:05:44,167 [DEBUG] [paper3] step=59 action=move_fast passed filter
+2026-05-09 20:05:44,226 [INFO] [yoloe-check] step=60 surprise=2.2257 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:44,226 [DEBUG] [norm-check] step=60 pred_norm=45.058 act_norm=46.751
+2026-05-09 20:05:44,227 [DEBUG] [frontier] step=60 situation=A (at frontier) target=None
+2026-05-09 20:05:44,227 [DEBUG] [paper3] step=60 action=move_fast passed filter
+2026-05-09 20:05:44,227 [INFO] [step] step=60 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:44,286 [INFO] [yoloe-check] step=61 surprise=2.1659 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:44,286 [DEBUG] [frontier] step=61 situation=A (at frontier) target=None
+2026-05-09 20:05:44,286 [DEBUG] [paper3] step=61 action=move_fast passed filter
+2026-05-09 20:05:44,348 [INFO] [yoloe-check] step=62 surprise=2.1327 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:44,349 [DEBUG] [frontier] step=62 situation=A (at frontier) target=None
+2026-05-09 20:05:44,349 [DEBUG] [paper3] step=62 action=move_fast passed filter
+2026-05-09 20:05:44,421 [INFO] [yoloe-check] step=63 surprise=1.7923 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:44,421 [DEBUG] [frontier] step=63 situation=A (at frontier) target=None
+2026-05-09 20:05:44,422 [DEBUG] [paper3] step=63 action=navigate passed filter
+2026-05-09 20:05:44,480 [INFO] [yoloe-check] step=64 surprise=7.6755 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:44,480 [INFO] [yoloe-trigger] step=64 surprise=7.6755 — running detector
+2026-05-09 20:05:44,649 [DEBUG] [frontier] step=64 situation=A (at frontier) target=None
+2026-05-09 20:05:44,649 [DEBUG] [paper3] step=64 action=navigate passed filter
+2026-05-09 20:05:44,717 [INFO] [yoloe-check] step=65 surprise=4.7568 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:44,717 [DEBUG] [frontier] step=65 situation=A (at frontier) target=None
+2026-05-09 20:05:44,717 [DEBUG] [paper3] step=65 action=navigate passed filter
+2026-05-09 20:05:44,717 [INFO] [step] step=65 target=None raw=RotateLeft final=RotateLeft last_success=True
+2026-05-09 20:05:44,776 [INFO] [yoloe-check] step=66 surprise=7.6755 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:44,776 [INFO] [yoloe-trigger] step=66 surprise=7.6755 — running detector
+2026-05-09 20:05:44,950 [DEBUG] [frontier] step=66 situation=A (at frontier) target=None
+2026-05-09 20:05:44,950 [DEBUG] [paper3] step=66 action=move_fast passed filter
+2026-05-09 20:05:45,013 [INFO] [yoloe-check] step=67 surprise=1.6265 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,014 [DEBUG] [frontier] step=67 situation=A (at frontier) target=None
+2026-05-09 20:05:45,014 [DEBUG] [paper3] step=67 action=navigate passed filter
+2026-05-09 20:05:45,074 [INFO] [yoloe-check] step=68 surprise=4.1825 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,074 [DEBUG] [frontier] step=68 situation=A (at frontier) target=None
+2026-05-09 20:05:45,074 [DEBUG] [paper3] step=68 action=move_fast passed filter
+2026-05-09 20:05:45,134 [INFO] [yoloe-check] step=69 surprise=3.6344 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,135 [DEBUG] [frontier] step=69 situation=A (at frontier) target=None
+2026-05-09 20:05:45,135 [DEBUG] [paper3] step=69 action=move_fast passed filter
+2026-05-09 20:05:45,193 [INFO] [yoloe-check] step=70 surprise=4.1827 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,194 [DEBUG] [frontier] step=70 situation=A (at frontier) target=None
+2026-05-09 20:05:45,194 [DEBUG] [paper3] step=70 action=move_fast passed filter
+2026-05-09 20:05:45,194 [INFO] [step] step=70 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:45,246 [INFO] [yoloe-check] step=71 surprise=4.0232 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,246 [DEBUG] [frontier] step=71 situation=A (at frontier) target=None
+2026-05-09 20:05:45,247 [DEBUG] [paper3] step=71 action=move_fast passed filter
+2026-05-09 20:05:45,308 [INFO] [yoloe-check] step=72 surprise=3.3818 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,308 [DEBUG] [frontier] step=72 situation=A (at frontier) target=None
+2026-05-09 20:05:45,309 [DEBUG] [paper3] step=72 action=move_fast passed filter
+2026-05-09 20:05:45,444 [INFO] [yoloe-check] step=73 surprise=3.7165 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,445 [DEBUG] [frontier] step=73 situation=A (at frontier) target=None
+2026-05-09 20:05:45,445 [DEBUG] [paper3] step=73 action=move_fast passed filter
+2026-05-09 20:05:45,495 [INFO] [yoloe-check] step=74 surprise=5.1922 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,495 [DEBUG] [frontier] step=74 situation=A (at frontier) target=None
+2026-05-09 20:05:45,496 [DEBUG] [paper3] step=74 action=navigate passed filter
+2026-05-09 20:05:45,544 [INFO] [yoloe-check] step=75 surprise=6.8615 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:45,545 [INFO] [yoloe-trigger] step=75 surprise=6.8615 — running detector
+2026-05-09 20:05:45,702 [DEBUG] [frontier] step=75 situation=A (at frontier) target=None
+2026-05-09 20:05:45,702 [DEBUG] [paper3] step=75 action=move_fast passed filter
+2026-05-09 20:05:45,703 [INFO] [step] step=75 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:45,753 [INFO] [yoloe-check] step=76 surprise=2.5580 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:45,753 [DEBUG] [frontier] step=76 situation=A (at frontier) target=None
+2026-05-09 20:05:45,753 [DEBUG] [paper3] step=76 action=move_fast passed filter
+2026-05-09 20:05:45,803 [INFO] [yoloe-check] step=77 surprise=2.5990 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:45,804 [DEBUG] [frontier] step=77 situation=A (at frontier) target=None
+2026-05-09 20:05:45,804 [DEBUG] [paper3] step=77 action=navigate passed filter
+2026-05-09 20:05:45,804 [INFO] [escape] step=77 action=RotateLeft state=try_left
+2026-05-09 20:05:45,853 [INFO] [yoloe-check] step=78 surprise=7.1132 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:45,854 [INFO] [yoloe-trigger] step=78 surprise=7.1132 — running detector
+2026-05-09 20:05:46,005 [DEBUG] [frontier] step=78 situation=A (at frontier) target=None
+2026-05-09 20:05:46,006 [DEBUG] [paper3] step=78 action=navigate passed filter
+2026-05-09 20:05:46,006 [INFO] [escape] step=78 action=MoveAhead state=try_left
+2026-05-09 20:05:46,062 [INFO] [yoloe-check] step=79 surprise=3.2275 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:46,062 [DEBUG] [frontier] step=79 situation=A (at frontier) target=None
+2026-05-09 20:05:46,062 [DEBUG] [paper3] step=79 action=move_fast passed filter
+2026-05-09 20:05:46,062 [INFO] [escape] step=79 action=RotateRight state=try_back
+2026-05-09 20:05:46,115 [INFO] [yoloe-check] step=80 surprise=6.9685 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:46,116 [DEBUG] [norm-check] step=80 pred_norm=46.087 act_norm=43.077
+2026-05-09 20:05:46,116 [INFO] [yoloe-trigger] step=80 surprise=6.9685 — running detector
+2026-05-09 20:05:46,271 [DEBUG] [frontier] step=80 situation=A (at frontier) target=None
+2026-05-09 20:05:46,272 [DEBUG] [paper3] step=80 action=move_fast passed filter
+2026-05-09 20:05:46,272 [INFO] [escape] step=80 action=RotateRight state=try_back
+2026-05-09 20:05:46,272 [INFO] [step] step=80 target=None raw=MoveAhead final=RotateRight last_success=True
+2026-05-09 20:05:46,328 [INFO] [yoloe-check] step=81 surprise=6.4611 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:46,328 [INFO] [yoloe-trigger] step=81 surprise=6.4611 — running detector
+2026-05-09 20:05:46,487 [DEBUG] [frontier] step=81 situation=A (at frontier) target=None
+2026-05-09 20:05:46,487 [DEBUG] [paper3] step=81 action=navigate passed filter
+2026-05-09 20:05:46,487 [INFO] [escape] step=81 action=MoveAhead state=try_back
+2026-05-09 20:05:46,542 [INFO] [yoloe-check] step=82 surprise=2.7561 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:46,543 [DEBUG] [frontier] step=82 situation=A (at frontier) target=None
+2026-05-09 20:05:46,543 [DEBUG] [paper3] step=82 action=move_fast passed filter
+2026-05-09 20:05:46,597 [INFO] [yoloe-check] step=83 surprise=2.8225 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:46,597 [DEBUG] [frontier] step=83 situation=A (at frontier) target=None
+2026-05-09 20:05:46,598 [DEBUG] [paper3] step=83 action=move_fast passed filter
+2026-05-09 20:05:46,662 [INFO] [yoloe-check] step=84 surprise=2.7609 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:46,663 [DEBUG] [frontier] step=84 situation=A (at frontier) target=None
+2026-05-09 20:05:46,663 [DEBUG] [paper3] step=84 action=move_fast passed filter
+2026-05-09 20:05:46,715 [INFO] [yoloe-check] step=85 surprise=2.8508 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:46,715 [DEBUG] [frontier] step=85 situation=A (at frontier) target=None
+2026-05-09 20:05:46,716 [DEBUG] [paper3] step=85 action=move_fast passed filter
+2026-05-09 20:05:46,716 [INFO] [step] step=85 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:46,769 [INFO] [yoloe-check] step=86 surprise=2.9530 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:46,769 [DEBUG] [frontier] step=86 situation=A (at frontier) target=None
+2026-05-09 20:05:46,769 [DEBUG] [paper3] step=86 action=move_fast passed filter
+2026-05-09 20:05:46,824 [INFO] [yoloe-check] step=87 surprise=2.5758 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:46,824 [DEBUG] [frontier] step=87 situation=A (at frontier) target=None
+2026-05-09 20:05:46,825 [DEBUG] [paper3] step=87 action=navigate passed filter
+2026-05-09 20:05:46,878 [INFO] [yoloe-check] step=88 surprise=8.5303 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:46,878 [INFO] [yoloe-trigger] step=88 surprise=8.5303 — running detector
+2026-05-09 20:05:47,034 [DEBUG] [frontier] step=88 situation=A (at frontier) target=None
+2026-05-09 20:05:47,034 [DEBUG] [paper3] step=88 action=move_fast passed filter
+2026-05-09 20:05:47,091 [INFO] [yoloe-check] step=89 surprise=2.9171 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:47,091 [DEBUG] [frontier] step=89 situation=A (at frontier) target=None
+2026-05-09 20:05:47,092 [DEBUG] [paper3] step=89 action=navigate passed filter
+2026-05-09 20:05:47,092 [INFO] [escape] step=89 action=RotateLeft state=try_left
+2026-05-09 20:05:47,142 [INFO] [yoloe-check] step=90 surprise=3.9218 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,143 [DEBUG] [frontier] step=90 situation=A (at frontier) target=None
+2026-05-09 20:05:47,143 [DEBUG] [paper3] step=90 action=navigate passed filter
+2026-05-09 20:05:47,143 [INFO] [escape] step=90 action=MoveAhead state=try_left
+2026-05-09 20:05:47,143 [INFO] [step] step=90 target=None raw=RotateLeft final=MoveAhead last_success=True
+2026-05-09 20:05:47,192 [INFO] [yoloe-check] step=91 surprise=2.9442 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,193 [DEBUG] [frontier] step=91 situation=A (at frontier) target=None
+2026-05-09 20:05:47,193 [DEBUG] [paper3] step=91 action=move_fast passed filter
+2026-05-09 20:05:47,247 [INFO] [yoloe-check] step=92 surprise=3.5964 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,248 [DEBUG] [frontier] step=92 situation=A (at frontier) target=None
+2026-05-09 20:05:47,248 [DEBUG] [paper3] step=92 action=move_fast passed filter
+2026-05-09 20:05:47,299 [INFO] [yoloe-check] step=93 surprise=3.2675 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,300 [DEBUG] [frontier] step=93 situation=A (at frontier) target=None
+2026-05-09 20:05:47,300 [DEBUG] [paper3] step=93 action=move_fast passed filter
+2026-05-09 20:05:47,353 [INFO] [yoloe-check] step=94 surprise=4.3844 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,353 [DEBUG] [frontier] step=94 situation=A (at frontier) target=None
+2026-05-09 20:05:47,353 [DEBUG] [paper3] step=94 action=move_fast passed filter
+2026-05-09 20:05:47,406 [INFO] [yoloe-check] step=95 surprise=5.0348 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,407 [DEBUG] [frontier] step=95 situation=A (at frontier) target=None
+2026-05-09 20:05:47,407 [DEBUG] [paper3] step=95 action=move_fast passed filter
+2026-05-09 20:05:47,407 [INFO] [step] step=95 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:47,459 [INFO] [yoloe-check] step=96 surprise=2.6578 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,460 [DEBUG] [frontier] step=96 situation=A (at frontier) target=None
+2026-05-09 20:05:47,460 [DEBUG] [paper3] step=96 action=move_fast passed filter
+2026-05-09 20:05:47,510 [INFO] [yoloe-check] step=97 surprise=3.2275 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:47,510 [DEBUG] [frontier] step=97 situation=A (at frontier) target=None
+2026-05-09 20:05:47,510 [DEBUG] [paper3] step=97 action=navigate passed filter
+2026-05-09 20:05:47,510 [INFO] [escape] step=97 action=RotateLeft state=try_left
+2026-05-09 20:05:47,562 [INFO] [yoloe-check] step=98 surprise=5.7189 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:47,562 [INFO] [yoloe-trigger] step=98 surprise=5.7189 — running detector
+2026-05-09 20:05:47,719 [DEBUG] [frontier] step=98 situation=A (at frontier) target=None
+2026-05-09 20:05:47,719 [DEBUG] [paper3] step=98 action=navigate passed filter
+2026-05-09 20:05:47,719 [INFO] [escape] step=98 action=MoveAhead state=try_left
+2026-05-09 20:05:47,776 [INFO] [yoloe-check] step=99 surprise=3.0469 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,777 [DEBUG] [frontier] step=99 situation=A (at frontier) target=None
+2026-05-09 20:05:47,777 [DEBUG] [paper3] step=99 action=move_fast passed filter
+2026-05-09 20:05:47,827 [INFO] [yoloe-check] step=100 surprise=2.7221 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,828 [DEBUG] [norm-check] step=100 pred_norm=47.459 act_norm=46.883
+2026-05-09 20:05:47,828 [DEBUG] [frontier] step=100 situation=B target=28 n_frontiers=39
+2026-05-09 20:05:47,828 [DEBUG] [paper3] step=100 action=move_fast passed filter
+2026-05-09 20:05:47,828 [INFO] [step] step=100 target=28 raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:47,877 [INFO] [yoloe-check] step=101 surprise=2.5078 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,878 [DEBUG] [frontier] step=101 situation=A (at frontier) target=None
+2026-05-09 20:05:47,878 [DEBUG] [paper3] step=101 action=navigate passed filter
+2026-05-09 20:05:47,936 [INFO] [yoloe-check] step=102 surprise=5.3291 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,937 [DEBUG] [frontier] step=102 situation=A (at frontier) target=None
+2026-05-09 20:05:47,937 [DEBUG] [paper3] step=102 action=move_fast passed filter
+2026-05-09 20:05:47,990 [INFO] [yoloe-check] step=103 surprise=2.2417 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:47,990 [DEBUG] [frontier] step=103 situation=B target=28 n_frontiers=37
+2026-05-09 20:05:47,990 [DEBUG] [paper3] step=103 action=navigate passed filter
+2026-05-09 20:05:48,040 [INFO] [yoloe-check] step=104 surprise=5.3493 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,041 [DEBUG] [frontier] step=104 situation=B target=28 n_frontiers=37
+2026-05-09 20:05:48,041 [DEBUG] [paper3] step=104 action=move_fast passed filter
+2026-05-09 20:05:48,094 [INFO] [yoloe-check] step=105 surprise=2.4223 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,094 [DEBUG] [frontier] step=105 situation=A (at frontier) target=None
+2026-05-09 20:05:48,094 [DEBUG] [paper3] step=105 action=move_fast passed filter
+2026-05-09 20:05:48,095 [INFO] [step] step=105 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:48,146 [INFO] [yoloe-check] step=106 surprise=3.3350 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,147 [DEBUG] [frontier] step=106 situation=A (at frontier) target=None
+2026-05-09 20:05:48,147 [DEBUG] [paper3] step=106 action=move_fast passed filter
+2026-05-09 20:05:48,203 [INFO] [yoloe-check] step=107 surprise=3.0643 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,203 [DEBUG] [frontier] step=107 situation=A (at frontier) target=None
+2026-05-09 20:05:48,204 [DEBUG] [paper3] step=107 action=move_fast passed filter
+2026-05-09 20:05:48,254 [INFO] [yoloe-check] step=108 surprise=3.1200 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,255 [DEBUG] [frontier] step=108 situation=A (at frontier) target=None
+2026-05-09 20:05:48,255 [DEBUG] [paper3] step=108 action=move_fast passed filter
+2026-05-09 20:05:48,311 [INFO] [yoloe-check] step=109 surprise=2.4247 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,312 [DEBUG] [frontier] step=109 situation=A (at frontier) target=None
+2026-05-09 20:05:48,312 [DEBUG] [paper3] step=109 action=move_fast passed filter
+2026-05-09 20:05:48,367 [INFO] [yoloe-check] step=110 surprise=3.3644 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,367 [DEBUG] [frontier] step=110 situation=A (at frontier) target=None
+2026-05-09 20:05:48,368 [DEBUG] [paper3] step=110 action=navigate passed filter
+2026-05-09 20:05:48,368 [INFO] [step] step=110 target=None raw=RotateLeft final=RotateLeft last_success=True
+2026-05-09 20:05:48,427 [INFO] [yoloe-check] step=111 surprise=6.9907 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:48,427 [INFO] [yoloe-trigger] step=111 surprise=6.9907 — running detector
+2026-05-09 20:05:48,595 [DEBUG] [frontier] step=111 situation=A (at frontier) target=None
+2026-05-09 20:05:48,595 [DEBUG] [paper3] step=111 action=move_fast passed filter
+2026-05-09 20:05:48,653 [INFO] [yoloe-check] step=112 surprise=2.6003 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,654 [DEBUG] [frontier] step=112 situation=A (at frontier) target=None
+2026-05-09 20:05:48,654 [DEBUG] [paper3] step=112 action=move_fast passed filter
+2026-05-09 20:05:48,710 [INFO] [yoloe-check] step=113 surprise=3.2496 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,710 [DEBUG] [frontier] step=113 situation=A (at frontier) target=None
+2026-05-09 20:05:48,710 [DEBUG] [paper3] step=113 action=navigate passed filter
+2026-05-09 20:05:48,766 [INFO] [yoloe-check] step=114 surprise=5.2503 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,767 [DEBUG] [frontier] step=114 situation=A (at frontier) target=None
+2026-05-09 20:05:48,767 [DEBUG] [paper3] step=114 action=move_fast passed filter
+2026-05-09 20:05:48,826 [INFO] [yoloe-check] step=115 surprise=2.9920 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,827 [DEBUG] [frontier] step=115 situation=A (at frontier) target=None
+2026-05-09 20:05:48,827 [DEBUG] [paper3] step=115 action=move_fast passed filter
+2026-05-09 20:05:48,827 [INFO] [step] step=115 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:48,883 [INFO] [yoloe-check] step=116 surprise=4.1544 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,883 [DEBUG] [frontier] step=116 situation=A (at frontier) target=None
+2026-05-09 20:05:48,883 [DEBUG] [paper3] step=116 action=move_fast passed filter
+2026-05-09 20:05:48,937 [INFO] [yoloe-check] step=117 surprise=4.7887 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,938 [DEBUG] [frontier] step=117 situation=A (at frontier) target=None
+2026-05-09 20:05:48,938 [DEBUG] [paper3] step=117 action=move_fast passed filter
+2026-05-09 20:05:48,995 [INFO] [yoloe-check] step=118 surprise=5.5398 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:48,996 [DEBUG] [frontier] step=118 situation=A (at frontier) target=None
+2026-05-09 20:05:48,996 [DEBUG] [paper3] step=118 action=move_fast passed filter
+2026-05-09 20:05:49,051 [INFO] [yoloe-check] step=119 surprise=4.9928 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:49,051 [DEBUG] [frontier] step=119 situation=A (at frontier) target=None
+2026-05-09 20:05:49,051 [DEBUG] [paper3] step=119 action=move_fast passed filter
+2026-05-09 20:05:49,108 [INFO] [yoloe-check] step=120 surprise=3.7457 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:49,109 [DEBUG] [norm-check] step=120 pred_norm=45.957 act_norm=44.181
+2026-05-09 20:05:49,109 [DEBUG] [frontier] step=120 situation=A (at frontier) target=None
+2026-05-09 20:05:49,109 [DEBUG] [paper3] step=120 action=move_fast passed filter
+2026-05-09 20:05:49,109 [INFO] [escape] step=120 action=RotateLeft state=try_left
+2026-05-09 20:05:49,109 [INFO] [step] step=120 target=None raw=MoveAhead final=RotateLeft last_success=False
+2026-05-09 20:05:49,163 [INFO] [yoloe-check] step=121 surprise=5.4655 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:49,164 [DEBUG] [frontier] step=121 situation=A (at frontier) target=None
+2026-05-09 20:05:49,164 [DEBUG] [paper3] step=121 action=navigate passed filter
+2026-05-09 20:05:49,164 [INFO] [escape] step=121 action=MoveAhead state=try_left
+2026-05-09 20:05:49,219 [INFO] [yoloe-check] step=122 surprise=2.8015 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:49,219 [DEBUG] [frontier] step=122 situation=A (at frontier) target=None
+2026-05-09 20:05:49,220 [DEBUG] [paper3] step=122 action=move_fast passed filter
+2026-05-09 20:05:49,277 [INFO] [yoloe-check] step=123 surprise=2.7844 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:49,277 [DEBUG] [frontier] step=123 situation=A (at frontier) target=None
+2026-05-09 20:05:49,277 [DEBUG] [paper3] step=123 action=navigate passed filter
+2026-05-09 20:05:49,335 [INFO] [yoloe-check] step=124 surprise=6.5867 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:49,335 [INFO] [yoloe-trigger] step=124 surprise=6.5867 — running detector
+2026-05-09 20:05:49,493 [DEBUG] [frontier] step=124 situation=A (at frontier) target=None
+2026-05-09 20:05:49,494 [DEBUG] [paper3] step=124 action=move_fast passed filter
+2026-05-09 20:05:49,551 [INFO] [yoloe-check] step=125 surprise=2.7407 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:49,552 [DEBUG] [frontier] step=125 situation=A (at frontier) target=None
+2026-05-09 20:05:49,552 [DEBUG] [paper3] step=125 action=move_fast passed filter
+2026-05-09 20:05:49,552 [INFO] [step] step=125 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:49,609 [INFO] [yoloe-check] step=126 surprise=2.9893 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:49,609 [DEBUG] [frontier] step=126 situation=A (at frontier) target=None
+2026-05-09 20:05:49,610 [DEBUG] [paper3] step=126 action=move_fast passed filter
+2026-05-09 20:05:49,671 [INFO] [yoloe-check] step=127 surprise=3.4065 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:49,672 [DEBUG] [frontier] step=127 situation=A (at frontier) target=None
+2026-05-09 20:05:49,672 [DEBUG] [paper3] step=127 action=navigate passed filter
+2026-05-09 20:05:49,758 [INFO] [yoloe-check] step=128 surprise=6.5855 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:49,758 [INFO] [yoloe-trigger] step=128 surprise=6.5855 — running detector
+2026-05-09 20:05:49,946 [DEBUG] [frontier] step=128 situation=A (at frontier) target=None
+2026-05-09 20:05:49,946 [DEBUG] [paper3] step=128 action=navigate passed filter
+2026-05-09 20:05:50,010 [INFO] [yoloe-check] step=129 surprise=6.7962 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:50,010 [INFO] [yoloe-trigger] step=129 surprise=6.7962 — running detector
+2026-05-09 20:05:50,178 [DEBUG] [frontier] step=129 situation=A (at frontier) target=None
+2026-05-09 20:05:50,178 [DEBUG] [paper3] step=129 action=move_fast passed filter
+2026-05-09 20:05:50,233 [INFO] [yoloe-check] step=130 surprise=3.6443 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,234 [DEBUG] [frontier] step=130 situation=A (at frontier) target=None
+2026-05-09 20:05:50,234 [DEBUG] [paper3] step=130 action=move_fast passed filter
+2026-05-09 20:05:50,234 [INFO] [step] step=130 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:50,290 [INFO] [yoloe-check] step=131 surprise=4.3680 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,290 [DEBUG] [frontier] step=131 situation=A (at frontier) target=None
+2026-05-09 20:05:50,291 [DEBUG] [paper3] step=131 action=move_fast passed filter
+2026-05-09 20:05:50,345 [INFO] [yoloe-check] step=132 surprise=2.9690 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,346 [DEBUG] [frontier] step=132 situation=A (at frontier) target=None
+2026-05-09 20:05:50,346 [DEBUG] [paper3] step=132 action=move_fast passed filter
+2026-05-09 20:05:50,402 [INFO] [yoloe-check] step=133 surprise=3.2470 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,403 [DEBUG] [frontier] step=133 situation=A (at frontier) target=None
+2026-05-09 20:05:50,403 [DEBUG] [paper3] step=133 action=navigate passed filter
+2026-05-09 20:05:50,456 [INFO] [yoloe-check] step=134 surprise=5.9060 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:50,457 [INFO] [yoloe-trigger] step=134 surprise=5.9060 — running detector
+2026-05-09 20:05:50,626 [DEBUG] [frontier] step=134 situation=A (at frontier) target=None
+2026-05-09 20:05:50,626 [DEBUG] [paper3] step=134 action=move_fast passed filter
+2026-05-09 20:05:50,687 [INFO] [yoloe-check] step=135 surprise=3.7902 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,687 [DEBUG] [frontier] step=135 situation=A (at frontier) target=None
+2026-05-09 20:05:50,687 [DEBUG] [paper3] step=135 action=navigate passed filter
+2026-05-09 20:05:50,687 [INFO] [step] step=135 target=None raw=RotateLeft final=RotateLeft last_success=True
+2026-05-09 20:05:50,750 [INFO] [yoloe-check] step=136 surprise=5.2404 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,750 [DEBUG] [frontier] step=136 situation=A (at frontier) target=None
+2026-05-09 20:05:50,750 [DEBUG] [paper3] step=136 action=move_fast passed filter
+2026-05-09 20:05:50,812 [INFO] [yoloe-check] step=137 surprise=2.3319 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,812 [DEBUG] [frontier] step=137 situation=A (at frontier) target=None
+2026-05-09 20:05:50,813 [DEBUG] [paper3] step=137 action=move_fast passed filter
+2026-05-09 20:05:50,874 [INFO] [yoloe-check] step=138 surprise=2.6948 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,875 [DEBUG] [frontier] step=138 situation=A (at frontier) target=None
+2026-05-09 20:05:50,875 [DEBUG] [paper3] step=138 action=move_fast passed filter
+2026-05-09 20:05:50,938 [INFO] [yoloe-check] step=139 surprise=3.9028 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:50,939 [DEBUG] [frontier] step=139 situation=A (at frontier) target=None
+2026-05-09 20:05:50,939 [DEBUG] [paper3] step=139 action=navigate passed filter
+2026-05-09 20:05:51,000 [INFO] [yoloe-check] step=140 surprise=7.4914 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:51,001 [DEBUG] [norm-check] step=140 pred_norm=46.429 act_norm=43.607
+2026-05-09 20:05:51,001 [INFO] [yoloe-trigger] step=140 surprise=7.4914 — running detector
+2026-05-09 20:05:51,176 [DEBUG] [frontier] step=140 situation=A (at frontier) target=None
+2026-05-09 20:05:51,176 [DEBUG] [paper3] step=140 action=move_fast passed filter
+2026-05-09 20:05:51,176 [INFO] [step] step=140 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:51,242 [INFO] [yoloe-check] step=141 surprise=3.2652 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:51,243 [DEBUG] [frontier] step=141 situation=B target=56 n_frontiers=59
+2026-05-09 20:05:51,243 [DEBUG] [paper3] step=141 action=navigate passed filter
+2026-05-09 20:05:51,304 [INFO] [yoloe-check] step=142 surprise=6.1638 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:51,305 [INFO] [yoloe-trigger] step=142 surprise=6.1638 — running detector
+2026-05-09 20:05:51,464 [DEBUG] [frontier] step=142 situation=B target=56 n_frontiers=60
+2026-05-09 20:05:51,465 [DEBUG] [paper3] step=142 action=move_fast passed filter
+2026-05-09 20:05:51,528 [INFO] [yoloe-check] step=143 surprise=4.1544 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:51,529 [DEBUG] [frontier] step=143 situation=A (at frontier) target=None
+2026-05-09 20:05:51,529 [DEBUG] [paper3] step=143 action=move_fast passed filter
+2026-05-09 20:05:51,591 [INFO] [yoloe-check] step=144 surprise=4.7887 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:51,591 [DEBUG] [frontier] step=144 situation=A (at frontier) target=None
+2026-05-09 20:05:51,592 [DEBUG] [paper3] step=144 action=move_fast passed filter
+2026-05-09 20:05:51,654 [INFO] [yoloe-check] step=145 surprise=5.5398 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:51,655 [DEBUG] [frontier] step=145 situation=A (at frontier) target=None
+2026-05-09 20:05:51,655 [DEBUG] [paper3] step=145 action=move_fast passed filter
+2026-05-09 20:05:51,655 [INFO] [step] step=145 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:51,716 [INFO] [yoloe-check] step=146 surprise=4.9928 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:51,717 [DEBUG] [frontier] step=146 situation=A (at frontier) target=None
+2026-05-09 20:05:51,717 [DEBUG] [paper3] step=146 action=move_fast passed filter
+2026-05-09 20:05:51,782 [INFO] [yoloe-check] step=147 surprise=3.7457 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:51,783 [DEBUG] [frontier] step=147 situation=A (at frontier) target=None
+2026-05-09 20:05:51,783 [DEBUG] [paper3] step=147 action=move_fast passed filter
+2026-05-09 20:05:51,783 [INFO] [escape] step=147 action=RotateLeft state=try_left
+2026-05-09 20:05:51,849 [INFO] [yoloe-check] step=148 surprise=5.4655 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:51,849 [DEBUG] [frontier] step=148 situation=A (at frontier) target=None
+2026-05-09 20:05:51,849 [DEBUG] [paper3] step=148 action=move_fast passed filter
+2026-05-09 20:05:51,849 [INFO] [escape] step=148 action=MoveAhead state=try_left
+2026-05-09 20:05:51,908 [INFO] [yoloe-check] step=149 surprise=2.8015 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:51,908 [DEBUG] [frontier] step=149 situation=A (at frontier) target=None
+2026-05-09 20:05:51,909 [DEBUG] [paper3] step=149 action=navigate passed filter
+2026-05-09 20:05:51,963 [INFO] [yoloe-check] step=150 surprise=7.8258 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:51,964 [INFO] [yoloe-trigger] step=150 surprise=7.8258 — running detector
+2026-05-09 20:05:52,126 [DEBUG] [frontier] step=150 situation=A (at frontier) target=None
+2026-05-09 20:05:52,126 [DEBUG] [paper3] step=150 action=move_fast passed filter
+2026-05-09 20:05:52,126 [INFO] [step] step=150 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:52,185 [INFO] [yoloe-check] step=151 surprise=3.2899 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:52,186 [DEBUG] [frontier] step=151 situation=A (at frontier) target=None
+2026-05-09 20:05:52,186 [DEBUG] [paper3] step=151 action=navigate passed filter
+2026-05-09 20:05:52,186 [INFO] [escape] step=151 action=RotateLeft state=try_left
+2026-05-09 20:05:52,241 [INFO] [yoloe-check] step=152 surprise=6.0244 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:52,242 [INFO] [yoloe-trigger] step=152 surprise=6.0244 — running detector
+2026-05-09 20:05:52,396 [DEBUG] [frontier] step=152 situation=A (at frontier) target=None
+2026-05-09 20:05:52,396 [DEBUG] [paper3] step=152 action=navigate passed filter
+2026-05-09 20:05:52,396 [INFO] [escape] step=152 action=MoveAhead state=try_left
+2026-05-09 20:05:52,454 [INFO] [yoloe-check] step=153 surprise=2.7844 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:52,454 [DEBUG] [frontier] step=153 situation=A (at frontier) target=None
+2026-05-09 20:05:52,454 [DEBUG] [paper3] step=153 action=move_fast passed filter
+2026-05-09 20:05:52,511 [INFO] [yoloe-check] step=154 surprise=3.7365 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:52,511 [DEBUG] [frontier] step=154 situation=A (at frontier) target=None
+2026-05-09 20:05:52,511 [DEBUG] [paper3] step=154 action=move_fast passed filter
+2026-05-09 20:05:52,566 [INFO] [yoloe-check] step=155 surprise=2.3647 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:52,567 [DEBUG] [frontier] step=155 situation=A (at frontier) target=None
+2026-05-09 20:05:52,567 [DEBUG] [paper3] step=155 action=navigate passed filter
+2026-05-09 20:05:52,567 [INFO] [escape] step=155 action=RotateLeft state=try_left
+2026-05-09 20:05:52,567 [INFO] [step] step=155 target=None raw=RotateRight final=RotateLeft last_success=False
+2026-05-09 20:05:52,624 [INFO] [yoloe-check] step=156 surprise=7.1231 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:52,624 [INFO] [yoloe-trigger] step=156 surprise=7.1231 — running detector
+2026-05-09 20:05:52,789 [INFO] [yoloe-objects] step=156 detected=['door']
+2026-05-09 20:05:52,789 [DEBUG] [frontier] step=156 situation=A (at frontier) target=None
+2026-05-09 20:05:52,789 [DEBUG] [paper3] step=156 action=move_fast passed filter
+2026-05-09 20:05:52,789 [INFO] [escape] step=156 action=MoveAhead state=try_left
+2026-05-09 20:05:52,847 [INFO] [yoloe-check] step=157 surprise=2.7651 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:52,847 [DEBUG] [frontier] step=157 situation=A (at frontier) target=None
+2026-05-09 20:05:52,847 [DEBUG] [paper3] step=157 action=navigate passed filter
+2026-05-09 20:05:52,905 [INFO] [yoloe-check] step=158 surprise=5.5820 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:52,906 [DEBUG] [frontier] step=158 situation=A (at frontier) target=None
+2026-05-09 20:05:52,906 [DEBUG] [paper3] step=158 action=navigate passed filter
+2026-05-09 20:05:52,961 [INFO] [yoloe-check] step=159 surprise=7.0424 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:52,962 [INFO] [yoloe-trigger] step=159 surprise=7.0424 — running detector
+2026-05-09 20:05:53,122 [DEBUG] [frontier] step=159 situation=A (at frontier) target=None
+2026-05-09 20:05:53,122 [DEBUG] [paper3] step=159 action=move_fast passed filter
+2026-05-09 20:05:53,181 [INFO] [yoloe-check] step=160 surprise=5.0903 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:53,181 [DEBUG] [norm-check] step=160 pred_norm=43.632 act_norm=43.375
+2026-05-09 20:05:53,181 [DEBUG] [frontier] step=160 situation=A (at frontier) target=None
+2026-05-09 20:05:53,182 [DEBUG] [paper3] step=160 action=move_fast passed filter
+2026-05-09 20:05:53,182 [INFO] [step] step=160 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:53,242 [INFO] [yoloe-check] step=161 surprise=2.4946 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:53,242 [DEBUG] [frontier] step=161 situation=A (at frontier) target=None
+2026-05-09 20:05:53,242 [DEBUG] [paper3] step=161 action=move_fast passed filter
+2026-05-09 20:05:53,297 [INFO] [yoloe-check] step=162 surprise=3.2200 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:53,297 [DEBUG] [frontier] step=162 situation=A (at frontier) target=None
+2026-05-09 20:05:53,297 [DEBUG] [paper3] step=162 action=navigate passed filter
+2026-05-09 20:05:53,355 [INFO] [yoloe-check] step=163 surprise=6.7608 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:53,356 [INFO] [yoloe-trigger] step=163 surprise=6.7608 — running detector
+2026-05-09 20:05:53,512 [DEBUG] [frontier] step=163 situation=A (at frontier) target=None
+2026-05-09 20:05:53,513 [DEBUG] [paper3] step=163 action=move_fast passed filter
+2026-05-09 20:05:53,568 [INFO] [yoloe-check] step=164 surprise=2.3569 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:53,569 [DEBUG] [frontier] step=164 situation=A (at frontier) target=None
+2026-05-09 20:05:53,569 [DEBUG] [paper3] step=164 action=navigate passed filter
+2026-05-09 20:05:53,624 [INFO] [yoloe-check] step=165 surprise=5.5684 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:53,624 [DEBUG] [frontier] step=165 situation=A (at frontier) target=None
+2026-05-09 20:05:53,625 [DEBUG] [paper3] step=165 action=move_fast passed filter
+2026-05-09 20:05:53,625 [INFO] [step] step=165 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:53,686 [INFO] [yoloe-check] step=166 surprise=3.2068 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:53,686 [DEBUG] [frontier] step=166 situation=A (at frontier) target=None
+2026-05-09 20:05:53,686 [DEBUG] [paper3] step=166 action=move_fast passed filter
+2026-05-09 20:05:53,741 [INFO] [yoloe-check] step=167 surprise=3.0836 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:53,741 [DEBUG] [frontier] step=167 situation=A (at frontier) target=None
+2026-05-09 20:05:53,741 [DEBUG] [paper3] step=167 action=move_fast passed filter
+2026-05-09 20:05:53,741 [INFO] [escape] step=167 action=RotateLeft state=try_left
+2026-05-09 20:05:53,799 [INFO] [yoloe-check] step=168 surprise=6.8415 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:53,799 [INFO] [yoloe-trigger] step=168 surprise=6.8415 — running detector
+2026-05-09 20:05:53,957 [DEBUG] [frontier] step=168 situation=A (at frontier) target=None
+2026-05-09 20:05:53,957 [DEBUG] [paper3] step=168 action=move_fast passed filter
+2026-05-09 20:05:53,957 [INFO] [escape] step=168 action=MoveAhead state=try_left
+2026-05-09 20:05:54,014 [INFO] [yoloe-check] step=169 surprise=3.8080 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:54,015 [DEBUG] [frontier] step=169 situation=B target=64 n_frontiers=62
+2026-05-09 20:05:54,015 [DEBUG] [paper3] step=169 action=navigate passed filter
+2026-05-09 20:05:54,074 [INFO] [yoloe-check] step=170 surprise=5.9430 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:54,074 [INFO] [yoloe-trigger] step=170 surprise=5.9430 — running detector
+2026-05-09 20:05:54,238 [DEBUG] [frontier] step=170 situation=B target=64 n_frontiers=63
+2026-05-09 20:05:54,238 [DEBUG] [paper3] step=170 action=move_fast passed filter
+2026-05-09 20:05:54,238 [INFO] [step] step=170 target=64 raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:54,294 [INFO] [yoloe-check] step=171 surprise=2.7010 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:54,295 [DEBUG] [frontier] step=171 situation=B target=64 n_frontiers=63
+2026-05-09 20:05:54,295 [DEBUG] [paper3] step=171 action=move_fast passed filter
+2026-05-09 20:05:54,347 [INFO] [yoloe-check] step=172 surprise=2.7651 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:54,348 [DEBUG] [frontier] step=172 situation=A (at frontier) target=None
+2026-05-09 20:05:54,348 [DEBUG] [paper3] step=172 action=navigate passed filter
+2026-05-09 20:05:54,406 [INFO] [yoloe-check] step=173 surprise=5.5099 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:54,406 [DEBUG] [frontier] step=173 situation=A (at frontier) target=None
+2026-05-09 20:05:54,407 [DEBUG] [paper3] step=173 action=navigate passed filter
+2026-05-09 20:05:54,466 [INFO] [yoloe-check] step=174 surprise=6.9560 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:54,466 [INFO] [yoloe-trigger] step=174 surprise=6.9560 — running detector
+2026-05-09 20:05:54,628 [DEBUG] [frontier] step=174 situation=A (at frontier) target=None
+2026-05-09 20:05:54,628 [DEBUG] [paper3] step=174 action=navigate passed filter
+2026-05-09 20:05:54,686 [INFO] [yoloe-check] step=175 surprise=5.1980 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:54,687 [DEBUG] [frontier] step=175 situation=A (at frontier) target=None
+2026-05-09 20:05:54,687 [DEBUG] [paper3] step=175 action=move_fast passed filter
+2026-05-09 20:05:54,687 [INFO] [step] step=175 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:54,745 [INFO] [yoloe-check] step=176 surprise=2.1830 threshold=5.5891 triggered=False last_success=False
+2026-05-09 20:05:54,745 [DEBUG] [frontier] step=176 situation=A (at frontier) target=None
+2026-05-09 20:05:54,745 [DEBUG] [paper3] step=176 action=navigate passed filter
+2026-05-09 20:05:54,745 [INFO] [escape] step=176 action=RotateLeft state=try_left
+2026-05-09 20:05:54,802 [INFO] [yoloe-check] step=177 surprise=7.6009 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:54,802 [INFO] [yoloe-trigger] step=177 surprise=7.6009 — running detector
+2026-05-09 20:05:54,959 [DEBUG] [frontier] step=177 situation=A (at frontier) target=None
+2026-05-09 20:05:54,959 [DEBUG] [paper3] step=177 action=navigate passed filter
+2026-05-09 20:05:54,959 [INFO] [escape] step=177 action=MoveAhead state=try_left
+2026-05-09 20:05:55,015 [INFO] [yoloe-check] step=178 surprise=2.4919 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,016 [DEBUG] [frontier] step=178 situation=A (at frontier) target=None
+2026-05-09 20:05:55,016 [DEBUG] [paper3] step=178 action=move_fast passed filter
+2026-05-09 20:05:55,074 [INFO] [yoloe-check] step=179 surprise=2.8128 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,075 [DEBUG] [frontier] step=179 situation=A (at frontier) target=None
+2026-05-09 20:05:55,075 [DEBUG] [paper3] step=179 action=navigate passed filter
+2026-05-09 20:05:55,131 [INFO] [yoloe-check] step=180 surprise=6.1180 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:55,132 [DEBUG] [norm-check] step=180 pred_norm=45.762 act_norm=45.661
+2026-05-09 20:05:55,132 [INFO] [yoloe-trigger] step=180 surprise=6.1180 — running detector
+2026-05-09 20:05:55,292 [DEBUG] [frontier] step=180 situation=A (at frontier) target=None
+2026-05-09 20:05:55,292 [DEBUG] [paper3] step=180 action=move_fast passed filter
+2026-05-09 20:05:55,292 [INFO] [step] step=180 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:55,350 [INFO] [yoloe-check] step=181 surprise=3.9767 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,351 [DEBUG] [frontier] step=181 situation=B target=64 n_frontiers=63
+2026-05-09 20:05:55,351 [DEBUG] [paper3] step=181 action=navigate passed filter
+2026-05-09 20:05:55,410 [INFO] [yoloe-check] step=182 surprise=5.9105 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:55,410 [INFO] [yoloe-trigger] step=182 surprise=5.9105 — running detector
+2026-05-09 20:05:55,574 [DEBUG] [frontier] step=182 situation=B target=64 n_frontiers=64
+2026-05-09 20:05:55,575 [DEBUG] [paper3] step=182 action=move_fast passed filter
+2026-05-09 20:05:55,632 [INFO] [yoloe-check] step=183 surprise=3.6443 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,633 [DEBUG] [frontier] step=183 situation=A (at frontier) target=None
+2026-05-09 20:05:55,633 [DEBUG] [paper3] step=183 action=navigate passed filter
+2026-05-09 20:05:55,691 [INFO] [yoloe-check] step=184 surprise=5.5819 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,692 [DEBUG] [frontier] step=184 situation=A (at frontier) target=None
+2026-05-09 20:05:55,692 [DEBUG] [paper3] step=184 action=move_fast passed filter
+2026-05-09 20:05:55,778 [INFO] [yoloe-check] step=185 surprise=4.3364 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,780 [DEBUG] [frontier] step=185 situation=B target=64 n_frontiers=62
+2026-05-09 20:05:55,780 [DEBUG] [paper3] step=185 action=navigate passed filter
+2026-05-09 20:05:55,780 [INFO] [step] step=185 target=64 raw=RotateRight final=RotateRight last_success=True
+2026-05-09 20:05:55,843 [INFO] [yoloe-check] step=186 surprise=5.0912 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,844 [DEBUG] [frontier] step=186 situation=B target=64 n_frontiers=62
+2026-05-09 20:05:55,844 [DEBUG] [paper3] step=186 action=move_fast passed filter
+2026-05-09 20:05:55,905 [INFO] [yoloe-check] step=187 surprise=2.5683 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:55,906 [DEBUG] [frontier] step=187 situation=A (at frontier) target=None
+2026-05-09 20:05:55,906 [DEBUG] [paper3] step=187 action=navigate passed filter
+2026-05-09 20:05:55,964 [INFO] [yoloe-check] step=188 surprise=5.7916 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:55,964 [INFO] [yoloe-trigger] step=188 surprise=5.7916 — running detector
+2026-05-09 20:05:56,159 [DEBUG] [frontier] step=188 situation=A (at frontier) target=None
+2026-05-09 20:05:56,159 [DEBUG] [paper3] step=188 action=move_fast passed filter
+2026-05-09 20:05:56,221 [INFO] [yoloe-check] step=189 surprise=4.1147 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:56,221 [DEBUG] [frontier] step=189 situation=B target=64 n_frontiers=60
+2026-05-09 20:05:56,222 [DEBUG] [paper3] step=189 action=navigate passed filter
+2026-05-09 20:05:56,284 [INFO] [yoloe-check] step=190 surprise=6.1057 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:56,285 [INFO] [yoloe-trigger] step=190 surprise=6.1057 — running detector
+2026-05-09 20:05:56,459 [INFO] [yoloe-objects] step=190 detected=['wheelchair ramp']
+2026-05-09 20:05:56,459 [DEBUG] [frontier] step=190 situation=B target=64 n_frontiers=60
+2026-05-09 20:05:56,460 [DEBUG] [paper3] step=190 action=navigate passed filter
+2026-05-09 20:05:56,460 [INFO] [step] step=190 target=64 raw=RotateRight final=RotateRight last_success=True
+2026-05-09 20:05:56,524 [INFO] [yoloe-check] step=191 surprise=5.5864 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:56,525 [DEBUG] [frontier] step=191 situation=B target=64 n_frontiers=60
+2026-05-09 20:05:56,525 [DEBUG] [paper3] step=191 action=move_fast passed filter
+2026-05-09 20:05:56,584 [INFO] [yoloe-check] step=192 surprise=2.3867 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:56,585 [DEBUG] [frontier] step=192 situation=B target=34 n_frontiers=60
+2026-05-09 20:05:56,585 [DEBUG] [paper3] step=192 action=navigate passed filter
+2026-05-09 20:05:56,647 [INFO] [yoloe-check] step=193 surprise=6.1243 threshold=5.5891 triggered=True last_success=True
+2026-05-09 20:05:56,648 [INFO] [yoloe-trigger] step=193 surprise=6.1243 — running detector
+2026-05-09 20:05:56,825 [DEBUG] [frontier] step=193 situation=B target=34 n_frontiers=60
+2026-05-09 20:05:56,826 [DEBUG] [paper3] step=193 action=move_fast passed filter
+2026-05-09 20:05:56,886 [INFO] [yoloe-check] step=194 surprise=2.5807 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:56,887 [DEBUG] [frontier] step=194 situation=A (at frontier) target=None
+2026-05-09 20:05:56,887 [DEBUG] [paper3] step=194 action=move_fast passed filter
+2026-05-09 20:05:56,945 [INFO] [yoloe-check] step=195 surprise=3.1792 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:56,946 [DEBUG] [frontier] step=195 situation=A (at frontier) target=None
+2026-05-09 20:05:56,946 [DEBUG] [paper3] step=195 action=move_fast passed filter
+2026-05-09 20:05:56,946 [INFO] [step] step=195 target=None raw=MoveAhead final=MoveAhead last_success=True
+2026-05-09 20:05:57,006 [INFO] [yoloe-check] step=196 surprise=3.4739 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:57,007 [DEBUG] [frontier] step=196 situation=A (at frontier) target=None
+2026-05-09 20:05:57,007 [DEBUG] [paper3] step=196 action=navigate passed filter
+2026-05-09 20:05:57,067 [INFO] [yoloe-check] step=197 surprise=5.3083 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:57,067 [DEBUG] [frontier] step=197 situation=A (at frontier) target=None
+2026-05-09 20:05:57,068 [DEBUG] [paper3] step=197 action=move_fast passed filter
+2026-05-09 20:05:57,121 [INFO] [yoloe-check] step=198 surprise=3.8818 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:57,121 [DEBUG] [frontier] step=198 situation=A (at frontier) target=None
+2026-05-09 20:05:57,122 [DEBUG] [paper3] step=198 action=move_fast passed filter
+2026-05-09 20:05:57,176 [INFO] [yoloe-check] step=199 surprise=3.7242 threshold=5.5891 triggered=False last_success=True
+2026-05-09 20:05:57,177 [DEBUG] [frontier] step=199 situation=A (at frontier) target=None
+2026-05-09 20:05:57,177 [DEBUG] [paper3] step=199 action=move_fast passed filter
+2026-05-09 20:05:57,185 [INFO] ============================================================
+2026-05-09 20:05:57,186 [INFO] [summary] steps=200 nodes=82 edges=91 yoloe_triggers=41 (20.5%) paper3_overrides=0 avg_surprise=4.1656 max_surprise=8.5303
+2026-05-09 20:05:57,186 [INFO] ============================================================
+2026-05-09 20:05:57,186 [INFO] [done] avg_surprise=4.1656 max_surprise=8.5303 labeled_nodes=0

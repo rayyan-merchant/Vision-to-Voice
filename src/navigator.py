@@ -14,6 +14,7 @@
 #   v5  (this file) — all fixed, see comments inline
 #   v6  anti-oscillation: decay-aware frontier scorer, explored marking,
 #       ±90° plan_action cone, dispatch cap
+#   v7  full logging — all events written to data/logs/navigator_error.log
 # ============================================================
 
 import os, math
@@ -28,6 +29,20 @@ from src.predictor        import load_jepa, prediction_error, action_onehot
 from src.scene_classifier import SceneContextMLP
 from src.detector         import ConditionalDetector
 from src.narrator         import make_narrator
+
+import logging
+
+os.makedirs("data/logs", exist_ok=True)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("data/logs/navigator_error.log", mode="w"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 ACTIONS       = ["MoveAhead", "RotateLeft", "RotateRight", "LookUp", "LookDown"]
 SCENE_ACTIONS = ["move_fast", "stop_wait", "navigate"]
@@ -48,30 +63,32 @@ def calibrate_surprise_threshold(predictor, encoder, controller,
     prev_cls  = None
     prev_act  = None
 
+    logger.info(f"[calibrate] Starting {n_warmup} warmup steps ...")
     print(f"\n[calibrate] {n_warmup} warmup steps …")
-    for _ in range(n_warmup):
+    for i in range(n_warmup):
         frame    = Image.fromarray(controller.last_event.frame)
         cls, _   = encoder.encode(frame)
         if prev_cls is not None:
-            surprises.append(
-                prediction_error(predictor, prev_cls, prev_act, cls)
-            )
+            s = prediction_error(predictor, prev_cls, prev_act, cls)
+            surprises.append(s)
+            logger.debug(f"[calibrate] warmup step={i} surprise={s:.4f}")
         prev_act = random.choice(ACTIONS)
         prev_cls = cls
         controller.step(prev_act)
 
     if not surprises:
+        logger.warning("[calibrate] No surprises collected — defaulting threshold to 2.0")
         return 2.0
 
     mean_s    = float(np.mean(surprises))
     std_s     = float(np.std(surprises))
-    # v7: use 1-sigma for ~16% trigger rate; lower clip to allow semantic novelty
     threshold = float(np.clip(mean_s + 1.0 * std_s, 0.05, 20.0))
-    print(f"[calibrate] mean={mean_s:.3f}  std={std_s:.3f}  "
-          f"threshold={threshold:.3f}")
-    
-    # Reset controller so exploration starts from spawn, not random warmup end
+
+    logger.info(f"[calibrate] mean={mean_s:.3f}  std={std_s:.3f}  threshold={threshold:.3f}")
+    print(f"[calibrate] mean={mean_s:.3f}  std={std_s:.3f}  threshold={threshold:.3f}")
+
     controller.reset()
+    logger.info("[calibrate] Controller reset to spawn.")
     print(f"[calibrate] Controller reset to spawn.\n")
     print(f"[calibrate] Expected YOLOE trigger rate ≈ 16 % of steps\n")
     return threshold
@@ -84,9 +101,9 @@ class EscapeSequencer:
     Wall-aware escape sequencer with backtrack-then-branch logic.
     """
     def __init__(self, narrator=None):
-        self.narrator = narrator
-        self.state = "idle"
-        self.step_idx = 0
+        self.narrator    = narrator
+        self.state       = "idle"
+        self.step_idx    = 0
         self.sweep_count = 0
 
     def step(self, last_event, planned_action):
@@ -97,13 +114,13 @@ class EscapeSequencer:
         Returns:
             (action_str, in_escape_bool)
         """
-        meta = last_event.metadata
+        meta         = last_event.metadata
         last_success = meta.get("lastActionSuccess", True)
-        last_action = meta.get("lastAction", "")
+        last_action  = meta.get("lastAction", "")
 
         if self.state == "idle":
             if last_action == "MoveAhead" and not last_success:
-                self.state = "try_left"
+                self.state    = "try_left"
                 self.step_idx = 0
             else:
                 return planned_action, False
@@ -119,9 +136,9 @@ class EscapeSequencer:
                 if last_success:
                     self.state = "idle"
                     return planned_action, False
-                self.state = "try_back"
+                self.state    = "try_back"
                 self.step_idx = 0
-                
+
         if self.state == "try_back":
             if self.step_idx == 0:
                 self.step_idx = 1
@@ -138,10 +155,10 @@ class EscapeSequencer:
                         self.narrator.say("Dead end. Returning to last junction.")
                     self.state = "idle"
                     return planned_action, False
-                self.state = "sweep_360"
-                self.step_idx = 0
+                self.state       = "sweep_360"
+                self.step_idx    = 0
                 self.sweep_count = 0
-                
+
         if self.state == "sweep_360":
             if self.step_idx == 0:
                 self.step_idx = 1
@@ -178,9 +195,8 @@ def plan_action(controller, cog_map, target_nid):
     """
     if target_nid is None:
         import random
-        # Fix 2: Break determinism with a weighted random choice
         return random.choices(
-            ["MoveAhead", "RotateLeft", "RotateRight"], 
+            ["MoveAhead", "RotateLeft", "RotateRight"],
             weights=[60, 20, 20]
         )[0]
 
@@ -193,12 +209,11 @@ def plan_action(controller, cog_map, target_nid):
     dx = float(target_pos[0]) - agent_x
     dz = float(target_pos[1]) - agent_z
 
-    # Fallback only — should not happen with correct frontier filtering
     if abs(dx) < 0.05 and abs(dz) < 0.05:
         return "MoveAhead"
 
     angle_to_target = math.degrees(math.atan2(dx, dz)) % 360
-    angle_diff = (angle_to_target - rot + 360) % 360
+    angle_diff      = (angle_to_target - rot + 360) % 360
 
     if 45 < angle_diff <= 180:
         return "RotateRight"
@@ -239,13 +254,6 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
         7. ESCAPE      — EscapeSequencer reads lastActionSuccess
         8. NARRATE     — voice update every 5 steps
         9. EXECUTE     — send action to AI2-THOR
-
-    Key fix in step 5 (v5):
-        frontier_nodes(current_nid=nid) uses mapper's degree-aware logic:
-          - degree=0 (step 0, only 1 node): current node IS returned as a
-            frontier so the agent has a target and takes MoveAhead
-          - degree>=1 (step 1+): current node excluded so plan_action
-            always has a genuinely distant target with dx/dz > 0
     """
     if surprise_threshold is None:
         surprise_threshold = calibrate_surprise_threshold(
@@ -259,7 +267,11 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
     escaper   = EscapeSequencer(narrator)
     paper3_override_count = 0
     yoloe_trigger_count   = 0
-    _dispatched_count     = {}   # anti-oscillation: cap per-node targeting
+    _dispatched_count     = {}
+
+    logger.info("=" * 60)
+    logger.info(f"  Vision-to-Voice | {n_steps} steps | threshold={surprise_threshold:.3f}")
+    logger.info("=" * 60)
 
     print(f"\n{'='*60}")
     print(f"  Vision-to-Voice  |  {n_steps} steps  |  "
@@ -281,46 +293,55 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
                     if prev_cls is not None else 0.0)
         error_log.append(surprise)
 
+        last_success = controller.last_event.metadata.get("lastActionSuccess", True)
+
+        # ── Full surprise log every step ─────────────────────────
+        triggered = surprise > surprise_threshold and last_success
+        logger.info(
+            f"[yoloe-check] step={step} surprise={surprise:.4f} "
+            f"threshold={surprise_threshold:.4f} "
+            f"triggered={triggered} last_success={last_success}"
+        )
+
         # ── 3. MAP ───────────────────────────────────────────────
         nid = cog_map.add_node(pos2, rot, cls, ptch, surprise)
         if prev_nid is not None:
             cog_map.add_edge(prev_nid, nid)
 
         # ── 4. CONDITIONAL YOLOE + OCR ───────────────────────────
-        # v7: Only trigger YOLOE if the last action succeeded. 
-        # Surprise on failure (collision) is expected physics, not novelty.
-        last_success = controller.last_event.metadata.get("lastActionSuccess", True)
-        
-        # v10: Diagnostic for scale mismatch
         if prev_cls is not None:
             with torch.no_grad():
-                z_pred_norm = torch.norm(predictor(prev_cls.unsqueeze(0), action_onehot(prev_act).unsqueeze(0))).item()
-                z_act_norm  = torch.norm(cls).item()
+                z_pred_norm = torch.norm(
+                    predictor(prev_cls.unsqueeze(0),
+                              action_onehot(prev_act).unsqueeze(0))
+                ).item()
+                z_act_norm = torch.norm(cls).item()
                 if step % 20 == 0:
+                    logger.debug(
+                        f"[norm-check] step={step} "
+                        f"pred_norm={z_pred_norm:.3f} act_norm={z_act_norm:.3f}"
+                    )
                     print(f"[debug] pred_norm={z_pred_norm:.3f}  act_norm={z_act_norm:.3f}")
 
-        # v12: Diagnostic — expose surprise vs threshold on every step for first 10
-        if step < 10:
-            print(f"[yoloe-check] step={step} surprise={surprise:.4f} threshold={surprise_threshold:.4f} check={surprise > surprise_threshold} last_success={last_success}")
-
-        if surprise > surprise_threshold and last_success:
+        if triggered:
             yoloe_trigger_count += 1
+            logger.info(f"[yoloe-trigger] step={step} surprise={surprise:.4f} — running detector")
             objects, ocr_text = detector.run(frame)
             if ocr_text:
                 cog_map.tag_label(nid, ocr_text)
                 narrator.say(f"Sign detected: {ocr_text}")
+                logger.info(f"[ocr] step={step} label='{ocr_text}' tagged to node={nid}")
             if objects:
                 narrator.say(f"I can see: {', '.join(objects[:3])}")
+                logger.info(f"[yoloe-objects] step={step} detected={objects[:3]}")
 
         # ── 5. FRONTIER SELECTION ─────────────────────────────────
-        # Hybrid approach: Situation A vs Situation B
         if cog_map.G.degree(nid) < cog_map.MAX_DEGREE:
-            # Situation A: Agent is AT a frontier. Step outward to discover new space.
             target = None
+            logger.debug(f"[frontier] step={step} situation=A (at frontier) target=None")
         else:
-            # Situation B: Agent is deep in explored territory. Navigate to a distant frontier.
             all_frontiers = cog_map.frontier_nodes()
-            frontiers = [f for f in all_frontiers if f != nid and f != prev_nid]
+            frontiers     = [f for f in all_frontiers if f != nid and f != prev_nid]
 
             if frontiers:
                 target = max(
@@ -332,10 +353,11 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
                     ),
                 )
                 _dispatched_count[target] = _dispatched_count.get(target, 0) + 1
+                logger.debug(f"[frontier] step={step} situation=B target={target} "
+                             f"n_frontiers={len(frontiers)}")
             else:
                 target = None
-
-
+                logger.debug(f"[frontier] step={step} situation=B no frontiers available")
 
         # ── 6. PAPER 3 FILTER ────────────────────────────────────
         raw_action   = plan_action(controller, cog_map, target)
@@ -345,13 +367,23 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
         if filtered != scene_action:
             action = scene_action_to_navigator(filtered, raw_action)
             paper3_override_count += 1
-            print(f"[paper3] step={step} proposed={scene_action} filtered={filtered} scores={scene_clf(cls).squeeze().tolist()}")
+            scores = scene_clf(cls).squeeze().tolist()
+            logger.info(
+                f"[paper3-override] step={step} proposed={scene_action} "
+                f"filtered={filtered} scores={scores}"
+            )
+            print(f"[paper3] step={step} proposed={scene_action} "
+                  f"filtered={filtered} scores={scores}")
         else:
             action = raw_action
+            logger.debug(f"[paper3] step={step} action={scene_action} passed filter")
 
         # ── 7. ESCAPE SEQUENCER ──────────────────────────────────
         action, in_escape = escaper.step(controller.last_event, action)
         if in_escape:
+            logger.info(
+                f"[escape] step={step} action={action} state={escaper.state}"
+            )
             print(f"  [Escape] step={step}  action={action}  "
                   f"state={escaper.state}")
 
@@ -364,10 +396,14 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
             )
 
         # ── 9. EXECUTE ───────────────────────────────────────────
-        # v11: diagnostic action logging
         if step % 5 == 0:
-            print(f"[debug] step={step} target={target} raw={raw_action} final={action} last_success={controller.last_event.metadata.get('lastActionSuccess', True)}")
-            
+            logger.info(
+                f"[step] step={step} target={target} raw={raw_action} "
+                f"final={action} last_success={last_success}"
+            )
+            print(f"[debug] step={step} target={target} raw={raw_action} "
+                  f"final={action} last_success={last_success}")
+
         controller.step(action)
         prev_nid = nid
         prev_cls = cls
@@ -375,6 +411,15 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
 
     # ── Summary ──────────────────────────────────────────────────
     trigger_pct = 100 * yoloe_trigger_count / max(len(error_log), 1)
+
+    logger.info("=" * 60)
+    logger.info(f"[summary] steps={len(error_log)} nodes={cog_map.node_count()} "
+                f"edges={cog_map.edge_count()} yoloe_triggers={yoloe_trigger_count} "
+                f"({trigger_pct:.1f}%) paper3_overrides={paper3_override_count} "
+                f"avg_surprise={float(np.mean(error_log)):.4f} "
+                f"max_surprise={float(np.max(error_log)):.4f}")
+    logger.info("=" * 60)
+
     print(f"\n{'='*60}")
     print(f"  Navigation Complete — {len(error_log)} steps executed")
     print(f"  Nodes mapped     : {cog_map.node_count()}")
@@ -388,12 +433,39 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
 # ■■ 6 — Entry point ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Vision-to-Voice Navigator")
+    parser.add_argument("--scene", default=None,
+                        help="Override scene from config (e.g. FloorPlan1, FloorPlan2)")
+    parser.add_argument("--steps", type=int, default=200,
+                        help="Number of navigation steps")
+    args = parser.parse_args()
+
     config_path = os.path.join(
         os.path.dirname(os.path.dirname(__file__)),
         "config", "config.yaml"
     )
     with open(config_path) as f:
         cfg = yaml.safe_load(f)
+
+    scene = args.scene or cfg["ai2thor"].get("scene", "FloorPlan210")
+
+    # Per-scene log file so FloorPlan1 and FloorPlan2 don't overwrite each other
+    os.makedirs("data/logs", exist_ok=True)
+    log_path = f"data/logs/navigator_{scene}.log"
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.FileHandler(log_path, mode="w"),
+            logging.StreamHandler()
+        ]
+    )
+    logger = logging.getLogger(__name__)
+    logger.info(f"[init] Scene={scene}  Steps={args.steps}  Log={log_path}")
 
     print("=" * 60)
     print("  Vision-to-Voice Navigator — Integration Test")
@@ -402,7 +474,7 @@ if __name__ == "__main__":
     print("\n[1/6] Starting AI2-THOR …")
     from ai2thor.controller import Controller
     controller = Controller(
-        scene       = "FloorPlan4",
+        scene       = scene,
         width       = cfg["ai2thor"]["width"],
         height      = cfg["ai2thor"]["height"],
         fieldOfView = cfg["ai2thor"]["fov"],
@@ -435,7 +507,7 @@ if __name__ == "__main__":
     narrator = make_narrator(enabled=True)
 
     print("\n" + "=" * 60)
-    print("  Starting 200-step exploration run …")
+    print(f"  Starting {args.steps}-step exploration run …")
     print("  (First 50 steps = calibration warmup)")
     print("=" * 60)
 
@@ -448,7 +520,7 @@ if __name__ == "__main__":
         detector           = detector,
         narrator           = narrator,
         cog_map            = cog_map,
-        n_steps            = 200,
+        n_steps            = args.steps,
         surprise_threshold = None,
     )
 
@@ -472,6 +544,9 @@ if __name__ == "__main__":
     node_ok = cog_map.node_count() > 50
     print(f"  {'[OK]' if node_ok else '[!] '} Node count "
           f"{'> 50 — healthy exploration' if node_ok else '<= 50 — agent may be stuck'}")
+
+    logger.info(f"[done] avg_surprise={avg_s:.4f} max_surprise={max_s:.4f} "
+                f"labeled_nodes={len(labeled)}")
 
     narrator.say("Navigation test complete. Shutting down.")
     if hasattr(narrator, "shutdown"):
