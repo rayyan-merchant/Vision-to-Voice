@@ -11,7 +11,7 @@ def dry_run_calibration():
     
     print("Initializing AI2-THOR...")
     controller = Controller(
-        scene="FloorPlan1",
+        scene="FloorPlan210",
         width=224,
         height=224,
         fieldOfView=90

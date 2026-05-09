@@ -165,9 +165,9 @@ class CognitivMap:
         visits      = node.get("visit_count", 1)
         degree      = self.G.degree(nid)
 
-        # Hard cap: stop targeting the same node endlessly
-        if dispatched_count >= 3:
-            return -999.0
+        # Soft cap: deprioritize over-targeted nodes but don't exclude them
+        if dispatched_count >= 10:
+            return -1.0
 
         score = surprise / max(visits, 1) + 2.0 / max(degree, 1)
 

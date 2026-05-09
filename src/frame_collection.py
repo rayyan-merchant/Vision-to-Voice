@@ -2,7 +2,7 @@ from ai2thor.controller import Controller
 from PIL import Image
 import random, json
 
-ctrl = Controller(scene="FloorPlan22", width=224, height=224, fieldOfView=90)
+ctrl = Controller(scene="FloorPlan210", width=224, height=224, fieldOfView=90)
 ACTIONS = ["MoveAhead", "RotateLeft", "RotateRight"]
 
 frames = []

@@ -65,8 +65,8 @@ def calibrate_surprise_threshold(predictor, encoder, controller,
 
     mean_s    = float(np.mean(surprises))
     std_s     = float(np.std(surprises))
-    # v7: lower clip (0.05) to allow semantic novelty; use 2-sigma for stability
-    threshold = float(np.clip(mean_s + 2.0 * std_s, 0.05, 20.0))
+    # v7: use 1-sigma for ~16% trigger rate; lower clip to allow semantic novelty
+    threshold = float(np.clip(mean_s + 1.0 * std_s, 0.05, 20.0))
     print(f"[calibrate] mean={mean_s:.3f}  std={std_s:.3f}  "
           f"threshold={threshold:.3f}")
     
@@ -177,7 +177,12 @@ def plan_action(controller, cog_map, target_nid):
     always non-zero and we never hit the distance=0 spin bug.
     """
     if target_nid is None:
-        return "MoveAhead"
+        import random
+        # Fix 2: Break determinism with a weighted random choice
+        return random.choices(
+            ["MoveAhead", "RotateLeft", "RotateRight"], 
+            weights=[60, 20, 20]
+        )[0]
 
     meta    = controller.last_event.metadata["agent"]
     agent_x = meta["position"]["x"]
@@ -294,6 +299,10 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
                 if step % 20 == 0:
                     print(f"[debug] pred_norm={z_pred_norm:.3f}  act_norm={z_act_norm:.3f}")
 
+        # v12: Diagnostic — expose surprise vs threshold on every step for first 10
+        if step < 10:
+            print(f"[yoloe-check] step={step} surprise={surprise:.4f} threshold={surprise_threshold:.4f} check={surprise > surprise_threshold} last_success={last_success}")
+
         if surprise > surprise_threshold and last_success:
             yoloe_trigger_count += 1
             objects, ocr_text = detector.run(frame)
@@ -304,19 +313,15 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
                 narrator.say(f"I can see: {', '.join(objects[:3])}")
 
         # ── 5. FRONTIER SELECTION ─────────────────────────────────
-        # v6: mark previous node as explored so frontier shrinks.
-        # Use mapper's score_frontier (surprise / visits + degree bonus)
-        # instead of raw max(surprise) to prevent oscillation.
-        # v12: The "Magic Bullet" for exploration.
-        # If the current node is ALREADY a frontier (degree < 3), we don't need to 
-        # navigate anywhere else. We should explore outward from here!
+        # Hybrid approach: Situation A vs Situation B
         if cog_map.G.degree(nid) < cog_map.MAX_DEGREE:
+            # Situation A: Agent is AT a frontier. Step outward to discover new space.
             target = None
         else:
-            # We are at a fully explored node. Find the best distant frontier to navigate to.
+            # Situation B: Agent is deep in explored territory. Navigate to a distant frontier.
             all_frontiers = cog_map.frontier_nodes()
             frontiers = [f for f in all_frontiers if f != nid and f != prev_nid]
-            
+
             if frontiers:
                 target = max(
                     frontiers,
@@ -328,7 +333,6 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
                 )
                 _dispatched_count[target] = _dispatched_count.get(target, 0) + 1
             else:
-                print(f"\n[Step {step}] No frontiers left. Attempting break-out...")
                 target = None
 
 
@@ -341,6 +345,7 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
         if filtered != scene_action:
             action = scene_action_to_navigator(filtered, raw_action)
             paper3_override_count += 1
+            print(f"[paper3] step={step} proposed={scene_action} filtered={filtered} scores={scene_clf(cls).squeeze().tolist()}")
         else:
             action = raw_action
 
@@ -397,7 +402,7 @@ if __name__ == "__main__":
     print("\n[1/6] Starting AI2-THOR …")
     from ai2thor.controller import Controller
     controller = Controller(
-        scene       = "FloorPlan1",
+        scene       = "FloorPlan4",
         width       = cfg["ai2thor"]["width"],
         height      = cfg["ai2thor"]["height"],
         fieldOfView = cfg["ai2thor"]["fov"],
