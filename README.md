@@ -3,11 +3,10 @@
 
 ---
 
-### Project Demo 
-https://drive.google.com/file/d/1cW3rZMu2IV5sggFjb7kgtAt0j03ZKNJk/view?usp=sharing
---- 
-### Project Report
-https://drive.google.com/file/d/1X2Hk0NZnk3k4Ia_EqpMeWBymXmFf1l5q/view?usp=sharing
+
+| | |
+|---|---|
+| [<img src="https://img.shields.io/badge/▶%20Watch%20Demo-Google%20Drive-blue?style=for-the-badge&logo=googledrive" />](https://drive.google.com/file/d/1cW3rZMu2IV5sggFjb7kgtAt0j03ZKNJk/view?usp=sharing) | [<img src="https://img.shields.io/badge/📄%20Read%20Report-Google%20Drive-red?style=for-the-badge&logo=googledrive" />](https://drive.google.com/file/d/1X2Hk0NZnk3k4Ia_EqpMeWBymXmFf1l5q/view?usp=sharing) |
 
 
 ## What This Is
