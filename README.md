@@ -1,240 +1,204 @@
-# Vision-to-Voice — Track C (Riya Bhart)
-**FAST NUCES | 6th Semester AI Project | v2.0**
-
-> Interpretability & Detection — SmoothGrad · AttnLRP · YOLOE · EasyOCR · TTS
+# Vision-to-Voice
+### A Predictive & Socially Aware Navigation Assistant for Campus Accessibility
 
 ---
 
-## What Riya Builds
+## What This Is
 
-Track C is the **interpretability, detection, and narration** layer of Vision-to-Voice. It has four modules:
+Vision-to-Voice is a memory-driven visual navigation assistant for visually impaired students on university campuses. It runs on a camera feed, builds a topological map of the environment from scratch, predicts what comes next before it is fully visible, detects unexpected changes, enforces socially appropriate navigation behaviour, and narrates everything to the user in plain language — without any pre-loaded map, without GPS, and without a human guide.
 
-| Module | Purpose | Paper |
-|---|---|---|
-| `saliency.py` | Generates attribution heatmaps showing WHY the agent made each decision | Paper 4 (AttnLRP) + Paper 5 (SmoothGrad) |
-| `detector.py` | Detects objects and reads signs — only when JEPA surprise is high | Novel (YOLOE + EasyOCR) |
-| `clever_hans.py` | Clusters 100+ attribution maps to find shortcut learning patterns | Paper 4 (Lapuschkin et al. 2019) |
-| `narrator.py` | Speaks navigation events aloud to the visually impaired user | Novel (pyttsx3) |
-
-### How They Fit in the Pipeline
-
-```
-DINOv3 frame (Rayyan) → JEPA surprise (Syeda)
-                                │
-                    surprise > 0.25?
-                                │
-                ┌───────────────┘
-                │                    ┌─────────────────────────────┐
-                ▼                    │         TRACK C (Riya)       │
-          detector.py ──────────────►│  YOLOE detects objects       │
-          (YOLOE + OCR)             │  EasyOCR reads sign text     │
-                │                   │  → cognitive map gets label  │
-                │                   │  → narrator speaks to user   │
-                │                   └─────────────────────────────┘
-                │
-         saliency.py  ─── runs on EVERY frame ───►  Dashboard Screen 3
-         (AttnLRP / SmoothGrad)
-                │
-         clever_hans.py ─── runs after 100+ maps ─►  Audit Report
-         (KMeans clustering)
-                │
-          narrator.py ─── called by navigator.py ─►  User hears guidance
-```
+The system is demonstrated in the AI2-THOR simulation environment and implements five peer-reviewed research papers in a single integrated pipeline.
 
 ---
 
-## Environment Setup
+## The Problem
 
-### Requirements
-- Python **3.9** (strictly recommended)
-- RAM: 8 GB minimum (16 GB preferred)
-- GPU: not required (CPU inference works)
-- Internet: required once for model downloads
-
-### Step 1 — Create Virtual Environment
-```bash
-conda create -n visionvoice python=3.9 -y
-conda activate visionvoice
-```
-
-### Step 2 — Install Dependencies
-```bash
-# Core torch (CPU version)
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-
-# Numpy — captum requires < 2.0
-pip install "numpy>=1.23,<2.0"
-
-# Interpretability
-pip install captum==0.8.0 scikit-learn
-
-# Detection & OCR
-pip install ultralytics>=8.3.0 easyocr
-
-# AttnLRP (primary attribution method — Paper 4)
-pip install lxt
-# If lxt install fails:
-# pip install git+https://github.com/rachtibat/LRP-eXplains-Transformers.git
-
-# Visualization & utilities
-pip install opencv-python matplotlib Pillow tqdm timm
-
-# Text-to-speech
-pip install pyttsx3
-
-# Linux only (pyttsx3 dependency):
-# sudo apt-get install espeak python3-espeak
-```
-
-### Step 3 — Install from requirements.txt
-```bash
-pip install -r requirements.txt
-```
-
-### Step 4 — Verify Everything
-```bash
-python setup_verify.py
-```
-All checks should pass (or warn for optional lxt).
+A visually impaired student enters a university building for the first time. There is no reliable indoor navigation system. Maps are static and go out of date. Corridors change. Rooms get reassigned. Signs are unreadable without sight. Existing systems require pre-built maps, have fixed object vocabularies, cannot read signage, and cannot explain their decisions.
 
 ---
 
-## Project Structure
+## Architecture
+
 ```
-visionvoice/
-├── src/
-│   ├── detector.py          ← YOLOE + EasyOCR (this file)
-│   ├── saliency.py          ← AttnLRP + SmoothGrad
-│   ├── clever_hans.py       ← Attribution clustering audit
-│   └── narrator.py          ← pyttsx3 TTS
-├── data/
-│   └── campus_photos/       ← Add real campus photos here
-├── outputs/
-│   ├── saliency_maps/       ← Saved .npy attribution maps + overlays
-│   └── clusters/            ← Cluster PNGs + audit report
-├── tests/
-│   ├── test_detector.py
-│   ├── test_saliency.py
-│   ├── test_narrator.py
-│   └── test_clever_hans.py
-├── setup_verify.py          ← Run on all 3 laptops
-└── requirements.txt
+┌─────────────────────────────────────────────────┐
+│  AI2-THOR Simulator (RGB frame 224×224 + pose)  │
+└──────────────────┬──────────────────────────────┘
+                   │
+          ┌────────▼────────┐
+          │  DINOv2 ViT-S   │  ← FROZEN, self-supervised
+          │  (dinov2_vits14)│
+          └──┬──────┬───────┘
+             │      │
+         CLS token  Patch tokens + Attention maps
+             │      │
+    ┌────────▼──┐  ┌▼──────────────────┐
+    │  JEPA-lite│  │  Cognitive Map     │
+    │  World    │  │  (NetworkX graph)  │
+    │  Model    │  │  OCR landmark tags │
+    └─────┬─────┘  └────────┬──────────┘
+          │                 │
+     Surprise score    Frontier nodes
+          │                 │
+          └────────┬────────┘
+                   │
+          ┌────────▼────────┐
+          │ Hybrid Frontier  │
+          │ Selection        │
+          └────────┬────────┘
+                   │
+          ┌────────▼────────┐     High surprise?
+          │  Scene Context  │────────────────────►  YOLOE + EasyOCR
+          │  MLP (Paper 3)  │                        (conditional)
+          └────────┬────────┘
+                   │ Final action
+                   ▼
+              AI2-THOR
+═══ INTERPRETABILITY ══════════════════════════════
+  SmoothGrad (Captum)  →  live saliency heatmaps
+  AttnLRP (lxt)        →  faithful ViT attribution
+  KMeans clustering    →  Clever Hans audit report
+  pyttsx3              →  voice narration
 ```
 
 ---
 
-## Running Tests
+## Five Core Papers
 
+| Paper | Contribution | Our Implementation |
+|-------|-------------|-------------------|
+| Mirowski et al. (2017) — *Learning to Navigate Without a Map* | Auxiliary predictive tasks force better spatial representations | JEPA-lite world model trained on 5000 trajectories |
+| Gupta et al. (2017) — *Cognitive Mapping and Planning* | Differentiable mapper builds spatial belief map | Topological NetworkX graph with DINOv2 features per node |
+| Epstein et al. (2019) — *Why Can't I Dance in the Mall?* | Action-place compatibility is LEARNED from visual features | Scene Context MLP trained on 267 labeled frames |
+| Lapuschkin et al. (2019) — *Unmasking Clever Hans Predictors* | Cluster attribution maps to find systematic shortcut patterns | AttnLRP + KMeans clustering on 100+ navigation decisions |
+| Smilkov et al. (2017) — *SmoothGrad* | Noise-averaged gradient saliency removes noise, reveals signal | Captum NoiseTunnel, live heatmap on Dashboard Screen 3 |
+
+---
+
+## Key Components
+
+**DINOv2 ViT-S/14** — Frozen self-supervised backbone. Produces 384-dim CLS tokens for every frame. Ablation confirms it produces 2–3× more distinct cognitive map nodes than ResNet-18 (16–22 vs 3–7 over 200 steps).
+
+**JEPA-lite World Model** — MLP trained to predict the next scene embedding given the current embedding and action. Held-out MSE: 0.1073 (target < 0.20). Surprise signal drives both conditional YOLOE detection and frontier selection.
+
+**Topological Cognitive Map** — NetworkX graph where each node stores world position, DINOv2 features, JEPA surprise score, and OCR-derived landmark label. Builds in real time with no pre-loaded map.
+
+**Scene Context MLP** — Three-class MLP (move_fast / stop_wait / navigate) trained on DINOv2 embeddings of labeled corridor screenshots. Accuracy: 89.89%. Reduces inappropriate navigation actions by 100% in ablation (1.95 → 0.00 per 10 steps).
+
+**Conditional YOLOE** — Open-vocabulary object detector (Ultralytics YOLOE). Detects any object named in plain English — "wheelchair ramp", "notice board", "water cooler" — without retraining. Activates only when JEPA surprise exceeds a calibrated threshold (typically 10–30% of steps).
+
+**EasyOCR** — Reads text from detected signs and door labels. OCR text becomes the semantic label of the nearest cognitive map node, converting an anonymous position graph into a named landmark graph.
+
+**AttnLRP (lxt)** — ICML 2024 successor to SpRAy from the same research group, specifically designed for transformer attention layers. Generates faithful attribution maps from DINOv2 (a ViT). KMeans clustering on 100+ maps identifies legitimate vs shortcut decision patterns.
+
+**SmoothGrad (Captum)** — Noise-averaged gradient saliency displayed live on Dashboard Screen 3.
+
+**pyttsx3 Narrator** — Text-to-speech voice output narrating detected objects, OCR text, and navigation progress.
+
+---
+
+## Ablation Results
+
+### Ablation 1 — JEPA-Biased vs Random Frontier Selection
+*FloorPlan210 (corridor scene, 295 reachable positions, 200 steps)*
+
+| Condition | Final Coverage |
+|-----------|--------------|
+| JEPA-biased | **21.0%** |
+| Random | 9.5% |
+
+JEPA outperformed random by 11.5 percentage points on the corridor scene. The surprise signal effectively identifies high-novelty frontier directions in branching environments.
+
+### Ablation 2 — Scene Context Filter (Paper 3)
+*FloorPlan210, 20 episodes × 10 steps*
+
+| Condition | Inappropriate Actions / 10 Steps |
+|-----------|----------------------------------|
+| Filter ON | **0.00** |
+| Filter OFF | 1.95 |
+
+100% reduction. The MLP learned socially appropriate navigation constraints purely from DINOv2 visual features — no hand-coded rules.
+
+### Ablation 3 — DINOv2 vs ResNet-18 Backbone
+*FloorPlan1, 200 steps*
+
+| Metric | DINOv2 | ResNet-18 |
+|--------|--------|-----------|
+| Map nodes produced | **16–22** | 3–7 |
+| Avg JEPA surprise | **0.299** | 0.163 |
+| Inter-frame cosine similarity | **0.701** | 0.838 |
+| Encode time (ms) | 34.9 | **19.4** |
+
+ResNet-18 is faster but its features don't distinguish nearby positions sufficiently, causing most map nodes to be deduplicated into the same location. DINOv2 is the required backbone.
+
+---
+
+## Quantitative Metrics
+
+| Metric | Target | Result |
+|--------|--------|--------|
+| Scene MLP accuracy | > 75% | **89.89%** |
+| F1 move_fast | > 0.70 | **0.898** |
+| F1 stop_wait | > 0.70 | **0.980** |
+| JEPA held-out MSE | < 0.20 | **0.1073** |
+| Nodes mapped (200 steps) | > 50 | **82** |
+| Edge:Node ratio | > 1.0 | **1.11** |
+| YOLOE trigger rate | 10–30% | **20.5%** |
+
+
+
+---
+
+
+---
+
+## Running the System
+
+**Full navigation run (200 steps, FloorPlan210):**
 ```bash
-cd visionvoice
+PYTHONPATH=. python src/navigator.py
+```
 
-# Test detector (YOLOE + EasyOCR)
-python tests/test_detector.py
+**Train JEPA world model:**
+```bash
+PYTHONPATH=. python src/predictor.py
+```
 
-# Test saliency (AttnLRP + SmoothGrad)
-python tests/test_saliency.py
+**Train Scene Context MLP:**
+```bash
+PYTHONPATH=. python src/scene_classifier.py
+```
 
-# Test narrator (TTS)
-python tests/test_narrator.py
+**Run all ablations:**
+```bash
+# Ablation 1 — JEPA vs Random frontier
+PYTHONPATH=. python src/ablation_frontier.py --scene FloorPlan210 --steps 200
 
-# Test Clever Hans audit
-python tests/test_clever_hans.py
+# Ablation 2 — Paper 3 filter ON vs OFF
+PYTHONPATH=. python src/ablation_paper3.py --scene FloorPlan210
+
+# Ablation 3 — DINOv2 vs ResNet18
+PYTHONPATH=. python src/ablation_compare.py --scene FloorPlan1 --steps 200
+```
+
+**Full metrics report:**
+```bash
+PYTHONPATH=. python src/metrics_summary.py
 ```
 
 ---
 
-## Running Individual Modules
 
-### Detector — test on a campus photo
-```bash
-python src/detector.py data/campus_photos/hallway.jpg 0.5
-```
 
-### Saliency — generate a heatmap
-```bash
-python src/saliency.py data/campus_photos/hallway.jpg smoothgrad
-python src/saliency.py data/campus_photos/hallway.jpg attnlrp   # if lxt installed
-```
 
-### Narrator — hear it speak
-```bash
-python src/narrator.py
-```
+## 👥 Project Contributors  
 
-### Clever Hans Audit — cluster collected maps
-```bash
-# After collecting 100+ maps from navigation runs:
-python src/clever_hans.py \
-    --maps_dir outputs/saliency_maps \
-    --report_dir outputs/clusters \
-    --k_min 3 --k_max 5
-```
+<div align="center">  <a href="https://www.linkedin.com/in/rayyanmerchant2004/" target="_blank">    <img src="https://img.shields.io/badge/Rayyan%20Merchant-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="Rayyan Merchant"/>  </a>  <a href="https://www.linkedin.com/in/rija-ali-731095296" target="_blank">    <img src="https://img.shields.io/badge/Syeda%20Rija%20Ali-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="Syeda Rija Ali"/>  </a>  <a href="https://www.linkedin.com/in/riya-bhart-339036287/" target="_blank">    <img src="https://img.shields.io/badge/Riya%20Bhart-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="Riya Bhart"/>  </a></div>
+
+
 
 ---
 
-## Integration Notes for navigator.py (Rayyan + Syeda)
-
-```python
-from src.detector import ConditionalDetector
-from src.saliency import SaliencyEngine, pil_to_tensor
-from src.clever_hans import AttributionCollector
-from src.narrator import make_narrator
-
-# Init once at startup
-detector   = ConditionalDetector(surprise_threshold=0.25)
-saliency   = SaliencyEngine(dino_model=encoder.model)  # pass Rayyan's DINOv3
-collector  = AttributionCollector(save_dir="outputs/saliency_maps")
-narrator   = make_narrator(rate=160)
-
-narrator.say("Vision to Voice system online.")
-
-# Inside navigation loop:
-for step in range(n_steps):
-    # ... Rayyan's perception, Syeda's JEPA ...
-
-    # Saliency — every frame
-    tensor = pil_to_tensor(frame)
-    heatmap = saliency.get_map(tensor, method="attnlrp")
-    collector.record(frame, chosen_action, heatmap, step=step)
-
-    # Conditional detection — only on surprise
-    if detector.should_run(surprise_score):
-        objects, ocr_text = detector.run(frame)
-        narrator.say_detection(objects)
-        if ocr_text:
-            cog_map.tag_label(node_id, ocr_text)
-            narrator.say_sign(ocr_text)
-
-    # Regular narration
-    if step % 5 == 0:
-        narrator.say_navigation(action, len(cog_map.nodes))
-
-collector.save_manifest()
-narrator.shutdown()
-```
 
 ---
 
-## Paper Connections
-
-| Component | Paper | Why |
-|---|---|---|
-| AttnLRP in `saliency.py` | **Paper 4** — Lapuschkin et al. 2019 + AttnLRP ICML 2024 | AttnLRP is the 2024 successor to SpRAy, co-authored by Lapuschkin. Faithfully propagates relevance through transformer attention layers. Standard LRP fails for ViTs. |
-| SmoothGrad in `saliency.py` | **Paper 5** — Smilkov et al. 2017 | Direct implementation: 50 noisy copies, stdevs=0.15, averaged gradient attribution. |
-| `clever_hans.py` clustering | **Paper 4** intent | Cluster attribution maps → find systematic shortcut patterns. A shortcut FINDING is a research result. |
-| YOLOE + EasyOCR in `detector.py` | Novel addition | Open-vocabulary detection for accessibility use case. No custom training needed. |
-| `narrator.py` | Novel addition | Closes the accessibility loop. Makes the system usable. |
-
----
-
-## Common Errors & Fixes
-
-| Error | Fix |
-|---|---|
-| `lxt not found` | `pip install lxt` or `pip install git+https://github.com/rachtibat/LRP-eXplains-Transformers.git`. SmoothGrad works as fallback. |
-| `YOLOE requires ultralytics >= 8.3.0` | `pip install --upgrade ultralytics` |
-| `pyttsx3 no default output device` (Linux) | `sudo apt-get install espeak python3-espeak` |
-| `numpy >= 2.0 conflict with captum` | `pip install "numpy>=1.23,<2.0"` |
-| `YOLOE fires on every frame` | Increase `surprise_threshold` from 0.25 to 0.35-0.40 |
-| `KMeans silhouette < 0.15` | Collect more navigation data (need 100+ diverse decisions) |
-| `EasyOCR returning garbage` | Filter: `conf > 0.5` and `len(text) >= 3` (already implemented) |
+*Vision-to-Voice — FAST NUCES AI Capstone 2026*
