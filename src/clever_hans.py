@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 """
 clever_hans.py — Track C (Riya Bhart)
 Vision-to-Voice | FAST NUCES | 6th Semester AI Project
@@ -503,3 +504,383 @@ if __name__ == "__main__":
     # Run audit
     results = auditor.run_audit()
     print(f"\n[audit] Results: {results}")
+=======
+"""
+clever_hans.py — Track C (Riya Bhart)
+Vision-to-Voice | FAST NUCES | 6th Semester AI Project
+
+Clever Hans Audit via AttnLRP Attribution Clustering.
+
+HOW IT FITS IN THE PIPELINE:
+  - Collects 100+ attribution maps from real navigation decisions (Weeks 3-4).
+  - Clusters them with KMeans to find systematic patterns.
+  - Produces a written audit report: are clusters attending to real structure
+    (door frames, corridors) or spurious shortcuts (carpet colour, wall texture)?
+  - This implements Paper 4 (Lapuschkin et al. 2019 — Unmasking Clever Hans)
+    using AttnLRP instead of vanilla SpRAy — the methodologically correct
+    choice for a ViT backbone like DINOv3.
+
+WHY THIS MATTERS:
+  A system that gets high coverage by following carpet colour instead of
+  real corridor structure is BRITTLE. The audit catches this before deployment.
+  Finding a shortcut is a RESEARCH RESULT, not a failure.
+
+WORKFLOW:
+  1. During navigation runs (Week 3 onwards), navigator.py calls:
+       collector.record(pil_frame, action, attnlrp_map)
+  2. After 100+ decisions, run:
+       python clever_hans.py --maps_dir ../outputs/saliency_maps/ --report_dir ../outputs/clusters/
+  3. Read the cluster report and cluster visualisations.
+
+PAPER CONNECTION:
+  Paper 4 (Lapuschkin et al. 2019) + AttnLRP (ICML 2024, same author).
+  AttnLRP is specifically designed for transformer attention layers — vanilla
+  SpRAy / LRP fail for ViT attention mechanisms. We use the upgrade.
+"""
+
+import json
+import numpy as np
+import matplotlib.pyplot as plt
+from pathlib import Path
+from dataclasses import dataclass, field
+from typing import Optional
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Data collection helper (used during navigation in navigator.py)
+# ──────────────────────────────────────────────────────────────────────────────
+
+@dataclass
+class NavigationDecision:
+    """One saved navigation decision for the Clever Hans audit."""
+    frame_path: str       # path to saved original frame
+    action: str           # action chosen ("MoveAhead", "RotateLeft", etc.)
+    attnlrp_map_path: str # path to saved .npy attribution map
+    step: int = 0
+    surprise_score: float = 0.0
+
+
+class AttributionCollector:
+    """
+    Collect attribution maps during navigation runs (used by navigator.py).
+
+    Usage in navigator.py:
+        from clever_hans import AttributionCollector
+        collector = AttributionCollector(save_dir="outputs/saliency_maps")
+
+        # Inside the navigation loop, after saliency_engine.get_map():
+        collector.record(
+            pil_frame=frame,
+            action=chosen_action,
+            attnlrp_map=heatmap_array,
+            step=step,
+            surprise_score=surprise
+        )
+
+        # Save the manifest when the run ends:
+        collector.save_manifest()
+    """
+
+    def __init__(self, save_dir: str = "outputs/saliency_maps"):
+        self.save_dir = Path(save_dir)
+        self.save_dir.mkdir(parents=True, exist_ok=True)
+        (self.save_dir / "frames").mkdir(exist_ok=True)
+        self.decisions: list[NavigationDecision] = []
+        print(f"[collector] Saving attribution data to: {self.save_dir}")
+
+    def record(
+        self,
+        pil_frame,           # PIL Image
+        action: str,
+        attnlrp_map: np.ndarray,
+        step: int = 0,
+        surprise_score: float = 0.0,
+    ):
+        """Save a frame + action + attribution map from one navigation step."""
+        idx = len(self.decisions)
+        frame_path = str(self.save_dir / "frames" / f"frame_{idx:04d}.png")
+        map_path = str(self.save_dir / f"attnlrp_{idx:04d}.npy")
+
+        pil_frame.save(frame_path)
+        np.save(map_path, attnlrp_map)
+
+        self.decisions.append(NavigationDecision(
+            frame_path=frame_path,
+            action=action,
+            attnlrp_map_path=map_path,
+            step=step,
+            surprise_score=surprise_score,
+        ))
+
+        if (idx + 1) % 20 == 0:
+            print(f"[collector] {idx + 1} decisions recorded.")
+
+    def save_manifest(self):
+        """Save a JSON manifest of all decisions (for audit reproducibility)."""
+        manifest_path = self.save_dir / "manifest.json"
+        data = [
+            {
+                "idx": i,
+                "frame_path": d.frame_path,
+                "action": d.action,
+                "attnlrp_map_path": d.attnlrp_map_path,
+                "step": d.step,
+                "surprise_score": d.surprise_score,
+            }
+            for i, d in enumerate(self.decisions)
+        ]
+        with open(manifest_path, "w") as f:
+            json.dump(data, f, indent=2)
+        print(f"[collector] Manifest saved: {manifest_path} ({len(data)} decisions)")
+        return str(manifest_path)
+
+    def __len__(self):
+        return len(self.decisions)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Clever Hans Auditor — main analysis class
+# ──────────────────────────────────────────────────────────────────────────────
+
+class CleverHansAuditor:
+    """
+    Cluster AttnLRP attribution maps to detect systematic shortcut learning.
+
+    Step 1: Load saved attribution maps (from AttributionCollector).
+    Step 2: Flatten + L2 normalize.
+    Step 3: KMeans with silhouette scoring (k = 3, 4, 5 → pick best).
+    Step 4: Visualise each cluster (frames + heatmaps side by side).
+    Step 5: Write a human-readable audit report.
+
+    Args:
+        maps_dir (str): Directory containing .npy AttnLRP maps and manifest.json.
+        report_dir (str): Where to write cluster visualisations and report.
+        k_range (tuple): Range of k values to try for KMeans.
+        min_samples (int): Minimum maps required to run a meaningful audit.
+    """
+
+    def __init__(
+        self,
+        maps_dir: str,
+        report_dir: str,
+        k_range: tuple = (3, 4, 5),
+        min_samples: int = 30,
+    ):
+        self.maps_dir = Path(maps_dir)
+        self.report_dir = Path(report_dir)
+        self.report_dir.mkdir(parents=True, exist_ok=True)
+        self.k_range = list(k_range)
+        self.min_samples = min_samples
+
+        # Populated by load()
+        self.frames: list = []           # PIL Images
+        self.actions: list[str] = []
+        self.attnlrp_maps: list[np.ndarray] = []
+        self.surprises: list[float] = []
+        self.metadata: list[dict] = []
+
+    def load_data(self):
+        """
+        read metadata.json; for each entry load frame_{fid}.png as PIL and attnlrp_{fid}.npy as numpy;
+        populate self.frames, self.attnlrp_maps, self.actions, self.surprises
+        """
+        from PIL import Image
+        import json
+        
+        manifest_path = self.maps_dir / "metadata.json"
+        if not manifest_path.exists():
+            print(f"[audit] metadata.json not found at {manifest_path}")
+            return 0
+            
+        with open(manifest_path, "r") as f:
+            metadata = json.load(f)
+            
+        for entry in metadata:
+            fid = entry["frame_id"]
+            frame_path = self.maps_dir / "frames" / f"frame_{fid}.png"
+            map_path = self.maps_dir / "attnlrp" / f"attnlrp_{fid}.npy"
+            
+            try:
+                frame = Image.open(frame_path).convert("RGB")
+                attn_map = np.load(map_path)
+                
+                self.frames.append(frame)
+                self.attnlrp_maps.append(attn_map)
+                self.actions.append(entry["action"])
+                self.surprises.append(entry["surprise"])
+                self.metadata.append(entry)
+            except Exception as e:
+                print(f"[audit] Skipping {fid}: {e}")
+                
+        print(f"[audit] Loaded {len(self.attnlrp_maps)} samples from {manifest_path}")
+        return len(self.attnlrp_maps)
+
+    def cluster(self, k_range=[3,4,5]):
+        from sklearn.cluster import KMeans
+        from sklearn.preprocessing import normalize
+        from sklearn.metrics import silhouette_score
+        from sklearn.decomposition import PCA
+        from scipy.ndimage import gaussian_filter
+        
+        n = len(self.attnlrp_maps)
+        if n < self.min_samples:
+            print(f"[audit] Only {n} samples - need at least {self.min_samples}.")
+            return None
+            
+        print(f"\n[audit] -- Clever Hans Audit ------------------------------")
+        
+        # Step 1: Pre-process maps (Gaussian Blur to remove pixel noise)
+        processed_maps = [gaussian_filter(m, sigma=2.0) for m in self.attnlrp_maps]
+        X = np.stack([m.flatten() for m in processed_maps])
+        
+        # Step 2: L2 Normalise (Pre-PCA)
+        X = normalize(X) 
+        
+        # Step 3: Dimensionality Reduction (PCA)
+        # Reducing 50,176 features to 32 components to focus on structural variance
+        pca = PCA(n_components=min(32, n-1), random_state=42)
+        X_reduced = pca.fit_transform(X)
+        X_reduced = normalize(X_reduced) # Re-normalise PCA components
+        
+        print(f"[audit] PCA complete: Reduced features from {X.shape[1]} to {X_reduced.shape[1]}")
+        
+        best_k = k_range[0]
+        best_score = -1.0
+        best_labels = None
+        
+        print(f"\n{'k':>4} {'silhouette':>12}")
+        print("-" * 20)
+        for k in k_range:
+            km = KMeans(n_clusters=k, random_state=42, n_init=10)
+            labels = km.fit_predict(X_reduced)
+            score = silhouette_score(X_reduced, labels)
+            print(f"{k:>4} {score:>12.4f}")
+            if score > best_score:
+                best_k, best_score, best_labels = k, score, labels
+                
+        print(f"\n[audit] Best: k={best_k}, silhouette={best_score:.4f}")
+        if best_score > 0.30:
+            print("[audit] [PASS] Silhouette > 0.30 - meaningful -> proceed.")
+        elif best_score < 0.15:
+            print("[audit] [FAIL] Silhouette < 0.15 - need more data -> collect more.")
+        else:
+            print("[audit] [WARN] Silhouette 0.15-0.30 - weak structure.")
+            
+        self.labels = best_labels
+        self.best_k = best_k
+        return best_k, best_labels
+
+    def visualise_cluster(self, cluster_id, out_dir="cluster_visualisations/"):
+        out_dir_path = Path(out_dir)
+        out_dir_path.mkdir(parents=True, exist_ok=True)
+        
+        idxs = [i for i, l in enumerate(self.labels) if l == cluster_id]
+        sample_idxs = idxs[:6]
+        n_show = len(sample_idxs)
+        if n_show == 0:
+            return
+            
+        fig, axes = plt.subplots(2, 6, figsize=(18, 6), facecolor="#0F172A")
+        
+        for j in range(6):
+            ax_frame = axes[0, j]
+            ax_heat = axes[1, j]
+            
+            if j < n_show:
+                idx = sample_idxs[j]
+                ax_frame.imshow(self.frames[idx])
+                ax_frame.set_title(self.actions[idx], color="white", fontsize=10)
+                ax_frame.axis("off")
+                
+                ax_heat.imshow(self.attnlrp_maps[idx], cmap="jet")
+                ax_heat.set_title(f"Surprise: {self.surprises[idx]:.2f}", color="white", fontsize=10)
+                ax_heat.axis("off")
+            else:
+                ax_frame.axis("off")
+                ax_heat.axis("off")
+                
+        plt.tight_layout()
+        out_path = out_dir_path / f"cluster_{cluster_id}_attnlrp.png"
+        plt.savefig(str(out_path), dpi=120, bbox_inches="tight", facecolor="#0F172A")
+        plt.close()
+        print(f"[audit] Saved cluster {cluster_id} visual to {out_path}")
+
+    def write_report(self, output_path="cluster_visualisations/clever_hans_report.md"):
+        """
+        Generates a markdown report summarizing the clustering results.
+        """
+        import numpy as np
+        lines = [
+            "# Clever Hans Audit -- AttnLRP Clustering Report\n\n",
+            f"Total samples: {len(self.frames)}\n\n",
+            f"Best k: {self.best_k}\n\n"
+        ]
+        for k in range(self.best_k):
+            idxs = [i for i, l in enumerate(self.labels) if l == k]
+            avg_surprise = np.mean([self.surprises[i] for i in idxs])
+            action_dist = {}
+            for i in idxs:
+                action = self.actions[i]
+                action_dist[action] = action_dist.get(action, 0) + 1
+            lines += [
+                f"## Cluster {k}\n\n",
+                f"- Size: {len(idxs)} samples\n",
+                f"- Avg surprise: {avg_surprise:.3f}\n",
+                f"- Action distribution: {action_dist}\n",
+                f"- Visual region attended: [MANUAL FILL]\n",
+                f"- Verdict: LEGITIMATE / CLEVER HANS [MANUAL]\n",
+                f"- If shortcut: proposed fix [MANUAL]\n\n"
+            ]
+        with open(output_path, "w") as f:
+            f.writelines(lines)
+        print(f"[audit] Report written to {output_path}")
+
+    def run_full_audit(self):
+        self.load_data()
+        self.cluster(k_range=self.k_range)
+        if hasattr(self, 'best_k'):
+            for cluster_id in range(self.best_k):
+                self.visualise_cluster(cluster_id)
+            self.write_report()
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CLI entry point
+# ──────────────────────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Run Clever Hans Audit on AttnLRP maps")
+    parser.add_argument(
+        "--maps_dir",
+        type=str,
+        default="data/saved_attnlrp_maps",
+        help="Directory containing .npy AttnLRP maps and metadata.json",
+    )
+    parser.add_argument(
+        "--report_dir",
+        type=str,
+        default="cluster_visualisations",
+        help="Where to write cluster visualisations and report",
+    )
+    parser.add_argument(
+        "--k_min", type=int, default=3, help="Minimum k for KMeans"
+    )
+    parser.add_argument(
+        "--k_max", type=int, default=5, help="Maximum k for KMeans"
+    )
+    args = parser.parse_args()
+
+    auditor = CleverHansAuditor(
+        maps_dir=args.maps_dir,
+        report_dir=args.report_dir,
+        k_range=tuple(range(args.k_min, args.k_max + 1)),
+    )
+
+    # Run audit
+    auditor.run_full_audit()
+    print("\n[audit] Clever Hans audit complete.")
+>>>>>>> Stashed changes
