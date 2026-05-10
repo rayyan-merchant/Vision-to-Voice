@@ -1,0 +1,19 @@
+2026-05-09 23:07:45,612 [INFO] ============================================================
+2026-05-09 23:07:45,612 [INFO]   ABLATION: DINOv3 ViT-S/14  vs  ResNet-18
+2026-05-09 23:07:45,612 [INFO]   Mode  : Live AI2-THOR
+2026-05-09 23:07:45,612 [INFO]   Steps : 200
+2026-05-09 23:07:45,612 [INFO] ============================================================
+2026-05-09 23:07:46,720 [INFO] using MLP layer as FFN
+2026-05-09 23:07:47,283 [INFO] 
+[ablation] Running: DINOv3 ViT-S/14
+2026-05-09 23:07:47,283 [INFO] [AI2-THOR] Loading FloorPlan1 for live ablation...
+2026-05-09 23:07:50,801 [INFO] Initialize return: {'cameraNearPlane': 0.009999999776482582, 'cameraFarPlane': 20.0}
+2026-05-09 23:07:59,591 [INFO] [ablation] DINOv3 ViT-S/14 done. Surprise=0.2987  Nodes=16  EncTime=34.88ms
+2026-05-09 23:07:59,591 [INFO] 
+[ablation] Running: ResNet-18
+2026-05-09 23:07:59,591 [INFO] [AI2-THOR] Loading FloorPlan1 for live ablation...
+2026-05-09 23:08:02,806 [INFO] Initialize return: {'cameraNearPlane': 0.009999999776482582, 'cameraFarPlane': 20.0}
+2026-05-09 23:08:08,670 [INFO] [ablation] ResNet-18 done. Surprise=0.1625  Nodes=7  EncTime=19.35ms
+2026-05-09 23:08:08,670 [INFO] [ablation] Results saved → data/ablation/backbone_results.csv
+2026-05-09 23:08:08,670 [INFO] Error log saved → data/ablation/ablation_error.log
+2026-05-09 23:08:08,670 [INFO] Ablation complete.

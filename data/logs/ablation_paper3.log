@@ -1,0 +1,20 @@
+2026-05-09 23:13:31,578 [INFO] ============================================================
+2026-05-09 23:13:31,579 [INFO]   Ablation 2: Paper 3 Filter ON vs OFF
+2026-05-09 23:13:31,579 [INFO]   Scene=FloorPlan210  Episodes=20  StepsPerEp=10
+2026-05-09 23:13:31,579 [INFO] ============================================================
+2026-05-09 23:13:32,708 [INFO] using MLP layer as FFN
+2026-05-09 23:13:36,331 [INFO] Initialize return: {'cameraNearPlane': 0.009999999776482582, 'cameraFarPlane': 20.0}
+2026-05-09 23:13:36,332 [INFO] [paper3-ON] Starting 20 episodes × 10 steps (filter=True)
+2026-05-09 23:13:36,916 [INFO] [paper3-ON] Episode 0/20 complete. Inappropriate so far: 0
+2026-05-09 23:13:39,680 [INFO] [paper3-ON] Episode 5/20 complete. Inappropriate so far: 0
+2026-05-09 23:13:42,547 [INFO] [paper3-ON] Episode 10/20 complete. Inappropriate so far: 0
+2026-05-09 23:13:45,370 [INFO] [paper3-ON] Episode 15/20 complete. Inappropriate so far: 0
+2026-05-09 23:13:47,590 [INFO] [paper3-ON] Total inappropriate: 0/200 = 0.00 per 10 steps
+2026-05-09 23:13:50,810 [INFO] Initialize return: {'cameraNearPlane': 0.009999999776482582, 'cameraFarPlane': 20.0}
+2026-05-09 23:13:50,811 [INFO] [paper3-OFF] Starting 20 episodes × 10 steps (filter=False)
+2026-05-09 23:13:51,373 [INFO] [paper3-OFF] Episode 0/20 complete. Inappropriate so far: 2
+2026-05-09 23:13:54,129 [INFO] [paper3-OFF] Episode 5/20 complete. Inappropriate so far: 13
+2026-05-09 23:13:56,912 [INFO] [paper3-OFF] Episode 10/20 complete. Inappropriate so far: 23
+2026-05-09 23:13:59,707 [INFO] [paper3-OFF] Episode 15/20 complete. Inappropriate so far: 35
+2026-05-09 23:14:02,101 [INFO] [paper3-OFF] Total inappropriate: 39/200 = 1.95 per 10 steps
+2026-05-09 23:14:02,138 [INFO] [csv] Appended paper3 results → data/ablation/paper3_results.csv

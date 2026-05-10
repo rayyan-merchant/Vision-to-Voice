@@ -1,0 +1,35 @@
+# Vision-to-Voice — Requirements
+# Python 3.9 recommended
+
+# Core deep learning
+torch==2.1.2
+torchvision==0.16.2
+
+# Numpy — captum requires < 2.0
+numpy>=1.23,<2.0
+
+# Perception & Models
+timm>=0.9.0               # needed by DINOv3 hub load
+
+# Simulation
+ai2thor==5.0.0
+
+# Detection & OCR
+ultralytics>=8.3.0        # includes YOLOE
+easyocr>=1.7.0
+
+# Interpretability
+captum==0.8.0
+lxt>=0.2.0
+
+# Data & Visualization
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+opencv-python>=4.8.0
+Pillow>=10.0.0
+networkx
+tqdm>=4.65.0
+pandas
+
+# Narrator
+pyttsx3>=2.90

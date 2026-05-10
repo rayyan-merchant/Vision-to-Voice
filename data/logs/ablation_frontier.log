@@ -1,0 +1,40 @@
+2026-05-09 23:12:20,829 [INFO] ============================================================
+2026-05-09 23:12:20,829 [INFO]   Ablation 1: JEPA-biased vs Random Frontier
+2026-05-09 23:12:20,829 [INFO]   Scene=FloorPlan210  Steps=200
+2026-05-09 23:12:20,829 [INFO] ============================================================
+2026-05-09 23:12:20,829 [INFO] Loading DINOEncoder ...
+2026-05-09 23:12:21,992 [INFO] using MLP layer as FFN
+2026-05-09 23:12:22,316 [INFO] Loading JEPA predictor ...
+2026-05-09 23:12:22,488 [INFO] 
+[A] Condition: JEPA-biased frontier selection
+2026-05-09 23:12:25,977 [INFO] Initialize return: {'cameraNearPlane': 0.009999999776482582, 'cameraFarPlane': 20.0}
+2026-05-09 23:12:25,988 [INFO] Reachable positions: 295
+2026-05-09 23:12:25,988 [INFO] [jepa] Starting 200-step run ...
+2026-05-09 23:12:26,035 [INFO] [jepa] step=  0  coverage=0.3%  nodes=1  surprise=0.0000  degree(cur)=0
+2026-05-09 23:12:28,077 [INFO] [jepa] step= 20  coverage=5.4%  nodes=16  surprise=1.9365  degree(cur)=1
+2026-05-09 23:12:29,019 [INFO] [jepa] step= 40  coverage=9.2%  nodes=27  surprise=8.5258  degree(cur)=1
+2026-05-09 23:12:30,574 [INFO] [jepa] step= 80  coverage=11.2%  nodes=33  surprise=7.3495  degree(cur)=1
+2026-05-09 23:12:31,488 [INFO] [jepa] step=100  coverage=15.9%  nodes=47  surprise=3.8321  degree(cur)=1
+2026-05-09 23:12:32,965 [INFO] [jepa] step=140  coverage=19.7%  nodes=58  surprise=4.3237  degree(cur)=2
+2026-05-09 23:12:33,865 [INFO] [jepa] step=160  coverage=21.0%  nodes=62  surprise=5.3206  degree(cur)=3
+2026-05-09 23:12:34,764 [INFO] [jepa] step=180  coverage=21.0%  nodes=62  surprise=5.3206  degree(cur)=3
+2026-05-09 23:12:35,613 [INFO] [jepa] Done. Final coverage=21.0%  Nodes=62
+2026-05-09 23:12:35,649 [INFO] 
+[B] Condition: Random frontier selection
+2026-05-09 23:12:38,802 [INFO] Initialize return: {'cameraNearPlane': 0.009999999776482582, 'cameraFarPlane': 20.0}
+2026-05-09 23:12:38,803 [INFO] [random] Starting 200-step run ...
+2026-05-09 23:12:38,844 [INFO] [random] step=  0  coverage=0.3%  nodes=1  surprise=0.0000  degree(cur)=0
+2026-05-09 23:12:39,784 [INFO] [random] step= 20  coverage=3.1%  nodes=9  surprise=5.4471  degree(cur)=1
+2026-05-09 23:12:40,661 [INFO] [random] step= 40  coverage=5.8%  nodes=17  surprise=3.9815  degree(cur)=2
+2026-05-09 23:12:41,390 [INFO] [random] step= 60  coverage=7.5%  nodes=22  surprise=7.5146  degree(cur)=3
+2026-05-09 23:12:42,319 [INFO] [random] step= 80  coverage=7.5%  nodes=22  surprise=4.6397  degree(cur)=3
+2026-05-09 23:12:43,263 [INFO] [random] step=100  coverage=8.1%  nodes=24  surprise=2.9121  degree(cur)=3
+2026-05-09 23:12:44,274 [INFO] [random] step=120  coverage=8.8%  nodes=26  surprise=7.3984  degree(cur)=3
+2026-05-09 23:12:45,136 [INFO] [random] step=140  coverage=9.5%  nodes=28  surprise=2.5517  degree(cur)=2
+2026-05-09 23:12:45,982 [INFO] [random] step=160  coverage=9.5%  nodes=28  surprise=6.3190  degree(cur)=3
+2026-05-09 23:12:46,821 [INFO] [random] step=180  coverage=9.5%  nodes=28  surprise=4.3422  degree(cur)=2
+2026-05-09 23:12:47,631 [INFO] [random] Done. Final coverage=9.5%  Nodes=28
+2026-05-09 23:12:47,668 [INFO] [result] jepa_80=None  random_80=None  jepa_final=21.0%  random_final=9.5%
+2026-05-09 23:12:47,669 [INFO] [csv] Saved → data/ablation/frontier_results.csv
+2026-05-09 23:12:47,903 [INFO] [plot] Saved → models/frontier_coverage.png
+2026-05-09 23:12:47,903 [INFO] [result] JEPA outperformed random.

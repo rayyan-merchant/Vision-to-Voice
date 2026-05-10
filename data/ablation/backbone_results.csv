@@ -1,0 +1,3 @@
+encoder,output_dim,pretraining,avg_cosim,avg_surprise,avg_norm,dedup_nodes,encode_ms,n_samples
+DINOv3 ViT-S/14,384,Self-supervised (DINO),0.7013,0.2987,47.5885,16,34.877,200
+ResNet-18,512,Supervised (ImageNet-1K),0.8375,0.1625,27.1806,7,19.354,200

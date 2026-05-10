@@ -3,14 +3,31 @@ output.mp3
 context.md
 prompt_day*.md
 
-models/*.pt
-models/*.png
-data/trajectories/*.json
-data/scene_labels/*.json
-data/campus_photos/
+# (Removed ignore rules for models and data to allow pushing)
 __pycache__/
 *.pyc
 *.egg-info/
 .env
 .DS_Store
 Thumbs.db
+
+*.pdf
+*.txt
+extract_pdfs.py
+check_models.py
+debug_yoloe.py
+fix_assets.py
+mobileclip_blt.ts
+yoloe-11s-seg.pt
+notebooks/yoloe-11s-deg.pt
+notebooks/mobileclip_blt.ts
+
+venv/
+.venv/
+env/
+.env/
+bin/
+lib/
+include/
+share/
+pyvenv.cfg
