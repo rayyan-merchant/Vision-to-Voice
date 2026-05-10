@@ -240,7 +240,7 @@ def scene_action_to_navigator(scene_action, original):
 # ■■ 5 — Main loop ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 def run_agent(controller, encoder, predictor, scene_clf, detector,
-              narrator, cog_map, n_steps=300, surprise_threshold=None):
+              narrator, cog_map, n_steps=300, surprise_threshold=None, use_dashboards=False):
     """
     Main navigation loop — the heart of Vision-to-Voice.
 
@@ -269,6 +269,17 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
     yoloe_trigger_count   = 0
     _dispatched_count     = {}
 
+    if use_dashboards:
+        import sys
+        import numpy as np
+        sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+        from demo.dashboard_screen2 import AgentViewDashboard
+        from demo.dashboard_screen3 import CognitiveMapDashboard
+        screen2 = AgentViewDashboard()
+        screen3 = CognitiveMapDashboard()
+        current_ocr_text = None
+
+
     logger.info("=" * 60)
     logger.info(f"  Vision-to-Voice | {n_steps} steps | threshold={surprise_threshold:.3f}")
     logger.info("=" * 60)
@@ -287,6 +298,8 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
         meta      = controller.last_event.metadata["agent"]
         pos2      = [meta["position"]["x"], meta["position"]["z"]]
         rot       = meta["rotation"]["y"]
+
+        current_ocr_text = None
 
         # ── 2. SURPRISE ──────────────────────────────────────────
         surprise = (prediction_error(predictor, prev_cls, prev_act, cls)
@@ -327,6 +340,10 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
             yoloe_trigger_count += 1
             logger.info(f"[yoloe-trigger] step={step} surprise={surprise:.4f} — running detector")
             objects, ocr_text = detector.run(frame)
+            if use_dashboards:
+                current_ocr_text = ocr_text
+
+            current_ocr_text = ocr_text
             if ocr_text:
                 cog_map.tag_label(nid, ocr_text)
                 narrator.say(f"Sign detected: {ocr_text}")
@@ -404,6 +421,28 @@ def run_agent(controller, encoder, predictor, scene_clf, detector,
             print(f"[debug] step={step} target={target} raw={raw_action} "
                   f"final={action} last_success={last_success}")
 
+        # ── 10. UPDATE DASHBOARDS ────────────────────────────────
+        if use_dashboards:
+            # Create a 16x16 attention map proxy from the DINO patches (256, 384)
+            # by taking the mean across the embedding dimension
+            attn_map = ptch.mean(dim=-1).reshape(16, 16).cpu().numpy()
+            
+            screen2.update(
+                frame_rgb=np.array(frame),
+                attn_map=attn_map,
+                action=action,
+                surprise=surprise,
+                step=step,
+                total_steps=n_steps,
+                yoloe_detections=None, # Raw bboxes not currently exposed by detector
+                ocr_text=current_ocr_text,
+                surprise_threshold=surprise_threshold
+            )
+            screen2.show()
+
+            screen3.update(cog_map.G, nid)
+            screen3.show()
+
         controller.step(action)
         prev_nid = nid
         prev_cls = cls
@@ -440,6 +479,8 @@ if __name__ == "__main__":
                         help="Override scene from config (e.g. FloorPlan1, FloorPlan2)")
     parser.add_argument("--steps", type=int, default=200,
                         help="Number of navigation steps")
+    parser.add_argument("--demo", action="store_true",
+                        help="Enable live visual dashboards (Screens 2 & 3)")
     args = parser.parse_args()
 
     config_path = os.path.join(
@@ -522,6 +563,7 @@ if __name__ == "__main__":
         cog_map            = cog_map,
         n_steps            = args.steps,
         surprise_threshold = None,
+        use_dashboards     = args.demo,
     )
 
     avg_s   = float(np.mean(error_log)) if error_log else 0.0
